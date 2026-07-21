@@ -265,11 +265,18 @@
             <sc-if value="{{ modalIsCake }}" hint-placeholder-val="{{ true }}">
               <div>
                 <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Nombre de personnes</p>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                  <sc-for list="{{ modalSizes }}" as="sz" hint-placeholder-count="4">
-                    <button onClick="{{ sz.onPick }}" style="{{ sz.style }}">{{ sz.label }}</button>
-                  </sc-for>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <button onClick="{{ personsDec }}" aria-label="Moins" style="width:40px;height:44px;border:1px solid #E8E8E8;background:#fff;border-radius:9px;cursor:pointer;color:#1A2C3D;font-size:20px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">−</button>
+                  <input type="number" min="1" inputmode="numeric" value="{{ modalPersons }}" onInput="{{ onPersonsInput }}" onBlur="{{ onPersonsBlur }}" aria-label="Nombre de personnes" style="width:84px;height:44px;text-align:center;border:1px solid #E8E8E8;border-radius:9px;font-size:17px;font-weight:600;color:#1A2C3D;outline:none;transition:border-color .25s ease;" style-focus="border-color:#C9A84C;">
+                  <button onClick="{{ personsInc }}" aria-label="Plus" style="width:40px;height:44px;border:1px solid #E8E8E8;background:#fff;border-radius:9px;cursor:pointer;color:#1A2C3D;font-size:20px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">+</button>
+                  <span style="font-size:13px;color:#8a98a5;">personnes</span>
                 </div>
+                <sc-if value="{{ modalCakesShow }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:12px;background:#FBF8EF;border:1px solid #EBD9AE;border-radius:9px;padding:10px 14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 11-8 11s-8-5-8-11a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span style="font-size:13px;color:#8a6d1f;">{{ modalCakesNote }}</span>
+                  </div>
+                </sc-if>
               </div>
             </sc-if>
 
@@ -302,11 +309,13 @@
                 <span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#C9A84C;">{{ modalPriceLabel }}</span>
               </div>
               <div style="display:flex;align-items:center;gap:12px;">
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <button onClick="{{ modalDec }}" aria-label="Moins" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">−</button>
-                  <span style="font-size:15px;min-width:20px;text-align:center;">{{ modalQty }}</span>
-                  <button onClick="{{ modalInc }}" aria-label="Plus" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">+</button>
-                </div>
+                <sc-if value="{{ modalIsUnit }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <button onClick="{{ modalDec }}" aria-label="Moins" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">−</button>
+                    <span style="font-size:15px;min-width:20px;text-align:center;">{{ modalQty }}</span>
+                    <button onClick="{{ modalInc }}" aria-label="Plus" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">+</button>
+                  </div>
+                </sc-if>
                 <button onClick="{{ modalAdd }}" style="background:#C9A84C;color:#fff;border:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;transition:background .3s ease;" style-hover="background:#1A2C3D;">Ajouter au panier</button>
               </div>
             </div>
@@ -342,22 +351,24 @@
 class Component extends DCLogic {
   // ── Données produits (photos réelles de l'atelier) ──
   // NOTE : prix/personne, ingrédients et allergènes sont des valeurs par défaut à vérifier.
-  //   - Gâteaux : pricePerPerson × nombre de personnes (sizes = tailles proposées).
+  //   - Gâteaux : pricePerPerson × nombre de personnes (minPersons = minimum de parts).
+  //     Un gâteau fait au maximum MAX_PER_CAKE parts ; au-delà, on compte plusieurs gâteaux.
   //   - Produits à l'unité (unit:true) : prix fixe, pas de choix de personnes.
+  MAX_PER_CAKE = 12;
   PATISSERIE = [
-    { id: 'tarte-nectarine-abricot', name: 'Tarte Nectarine & Abricot', desc: "Quenelles de chantilly vanillée, nectarines et abricots frais, pointe de romarin sur fond sablé pur beurre.", pricePerPerson: 4.5, sizes: [6, 8, 10, 12], defaultPersons: 6, img: 'images/tarte-nectarine-abricot-1.jpg',
+    { id: 'tarte-nectarine-abricot', name: 'Tarte Nectarine & Abricot', desc: "Quenelles de chantilly vanillée, nectarines et abricots frais, pointe de romarin sur fond sablé pur beurre.", pricePerPerson: 4.5, minPersons: 6, img: 'images/tarte-nectarine-abricot-1.jpg',
       ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème pâtissière à la vanille", "Chantilly mascarpone", "Nectarines fraîches", "Abricots frais", "Romarin"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-    { id: 'tarte-fraises-vanille', name: 'Tarte Fraises-Vanille', desc: "Chantilly à la vanille de Madagascar dressée en rosace, fraises fraîches de saison, fond sablé.", pricePerPerson: 4.8, sizes: [6, 8, 10, 12], defaultPersons: 6, img: 'images/tarte-fraises-vanille-1.jpg',
+    { id: 'tarte-fraises-vanille', name: 'Tarte Fraises-Vanille', desc: "Chantilly à la vanille de Madagascar dressée en rosace, fraises fraîches de saison, fond sablé.", pricePerPerson: 4.8, minPersons: 6, img: 'images/tarte-fraises-vanille-1.jpg',
       ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème diplomate vanille de Madagascar", "Fraises fraîches", "Sucre"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-    { id: 'tarte-citron', name: 'Tarte Citron', desc: "Crème de citron, pétales de chantilly, zestes frais et palet de chocolat blanc, fond sablé pur beurre.", pricePerPerson: 4.3, sizes: [6, 8, 10, 12], defaultPersons: 6, img: 'images/tarte-citron-2.jpg',
+    { id: 'tarte-citron', name: 'Tarte Citron', desc: "Crème de citron, pétales de chantilly, zestes frais et palet de chocolat blanc, fond sablé pur beurre.", pricePerPerson: 4.3, minPersons: 6, img: 'images/tarte-citron-2.jpg',
       ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème de citron (citrons, œufs, beurre, sucre)", "Chantilly", "Chocolat blanc", "Zestes de citron"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait", "Soja"] },
-    { id: 'tarte-vanille-caramel', name: 'Tarte Vanille-Caramel', desc: "Crème légère à la vanille dressée au couteau, traits de caramel beurre salé maison, fond sablé.", pricePerPerson: 4.5, sizes: [6, 8, 10, 12], defaultPersons: 6, img: 'images/tarte-vanille-caramel-3.jpg',
+    { id: 'tarte-vanille-caramel', name: 'Tarte Vanille-Caramel', desc: "Crème légère à la vanille dressée au couteau, traits de caramel beurre salé maison, fond sablé.", pricePerPerson: 4.5, minPersons: 6, img: 'images/tarte-vanille-caramel-3.jpg',
       ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème légère à la vanille", "Caramel au beurre salé", "Sucre"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-    { id: 'gateau-chocolat', name: 'Le Tout-Chocolat', desc: "Chantilly chocolat en rosace, cœur coulant praliné, contour glaçage rocher aux éclats de noisettes.", pricePerPerson: 5.0, sizes: [6, 8, 10, 12], defaultPersons: 6, img: 'images/gateau-chocolat-3.jpg',
+    { id: 'gateau-chocolat', name: 'Le Tout-Chocolat', desc: "Chantilly chocolat en rosace, cœur coulant praliné, contour glaçage rocher aux éclats de noisettes.", pricePerPerson: 5.0, minPersons: 6, img: 'images/gateau-chocolat-3.jpg',
       ingredients: ["Biscuit au chocolat (farine de blé, œufs, sucre, cacao)", "Chantilly au chocolat", "Praliné noisette", "Glaçage rocher (chocolat, éclats de noisettes)"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque (noisettes)", "Soja"] },
     { id: 'tartelette-vanille-passion', name: 'Tartelette Vanille-Passion', desc: "Format individuel — crème vanille aux grains, cœur exotique mangue-passion, gousse de vanille.", price: 6.5, unit: true, img: 'images/tartelette-vanille-passion-1.jpg',
@@ -416,6 +427,7 @@ class Component extends DCLogic {
           id: i.id,
           name: i.name,
           persons: i.persons != null ? i.persons : null,
+          cakes: i.persons ? this.cakesFor(i.persons) : 0,
           price: i.price,
           qty: i.qty || 1,
         }));
@@ -483,18 +495,35 @@ class Component extends DCLogic {
   backToShop = () => this.setState({ view: 'shop', order: null });
 
   // ── Fiche produit (popup détaillée) ──
+  minPersonsOf = (product) => product && !product.unit ? (product.minPersons || 6) : 0;
+  cakesFor = (persons) => Math.max(1, Math.ceil(persons / this.MAX_PER_CAKE));
   unitPriceFor = (product, persons) => product.unit ? product.price : product.pricePerPerson * persons;
 
   openProduct = (product) => this.setState({
     modalId: product.id,
-    modalPersons: product.unit ? 0 : (product.defaultPersons || (product.sizes ? product.sizes[0] : 0)),
+    modalPersons: this.minPersonsOf(product),
     modalQty: 1,
     allergenesOpen: false,
     lightboxIndex: -1,
     cartOpen: false,
   });
   closeProduct = () => this.setState({ modalId: null });
-  setModalPersons = (n) => this.setState({ modalPersons: n });
+  // Saisie libre du nombre de personnes (0 toléré pendant la frappe, borné au min à la validation)
+  onPersonsInput = (e) => {
+    const n = parseInt(e.target.value, 10);
+    this.setState({ modalPersons: isNaN(n) ? 0 : Math.max(0, n) });
+  };
+  onPersonsBlur = () => this.setState((s) => {
+    const p = this.PATISSERIE.concat(this.CHOCOLAT).find((x) => x.id === s.modalId);
+    const min = this.minPersonsOf(p);
+    return { modalPersons: Math.max(min, s.modalPersons || min) };
+  });
+  personsInc = () => this.setState((s) => ({ modalPersons: (s.modalPersons || 0) + 1 }));
+  personsDec = () => this.setState((s) => {
+    const p = this.PATISSERIE.concat(this.CHOCOLAT).find((x) => x.id === s.modalId);
+    const min = this.minPersonsOf(p);
+    return { modalPersons: Math.max(min, (s.modalPersons || min) - 1) };
+  });
   toggleAllergenes = () => this.setState((s) => ({ allergenesOpen: !s.allergenesOpen }));
   modalInc = () => this.setState((s) => ({ modalQty: s.modalQty + 1 }));
   modalDec = () => this.setState((s) => ({ modalQty: Math.max(1, s.modalQty - 1) }));
@@ -503,15 +532,17 @@ class Component extends DCLogic {
   // ── Panier (lignes identifiées par une clé produit + taille) ──
   addLine = (product, persons, qty) => {
     if (!product) return;
+    const nb = product.unit ? 0 : Math.max(this.minPersonsOf(product), persons || 0);
+    const cakes = product.unit ? 0 : this.cakesFor(nb);
     this.setState((s) => {
-      const unit = this.unitPriceFor(product, persons);
-      const key = product.unit ? product.id : product.id + '@' + persons;
+      const unit = this.unitPriceFor(product, nb);
+      const key = product.unit ? product.id : product.id + '@' + nb;
       const existing = s.cart.find((i) => i.key === key);
       let cart;
       if (existing) {
         cart = s.cart.map((i) => i.key === key ? { ...i, qty: i.qty + qty } : i);
       } else {
-        cart = [...s.cart, { key, id: product.id, name: product.name, persons: product.unit ? null : persons, price: unit, qty }];
+        cart = [...s.cart, { key, id: product.id, name: product.name, persons: product.unit ? null : nb, cakes, price: unit, qty }];
       }
       this.persist(cart);
       return { cart, cartOpen: true, modalId: null };
@@ -614,15 +645,18 @@ class Component extends DCLogic {
       name: p.name,
       desc: p.desc,
       img: p.img,
-      priceLabel: p.unit ? this.formatPrice(p.price) : 'dès ' + this.formatPrice(p.pricePerPerson * p.sizes[0]),
+      priceLabel: p.unit ? this.formatPrice(p.price) : 'dès ' + this.formatPrice(p.pricePerPerson * this.minPersonsOf(p)),
       onOpen: () => this.openProduct(p),
     }));
 
+    const cakesLabel = (n) => n + ' gâteau' + (n > 1 ? 'x' : '');
     const catalog = [...this.PATISSERIE, ...this.CHOCOLAT];
     const cartItems = s.cart.map((it) => ({
       ...it,
       img: (catalog.find((p) => p.id === it.id) || {}).img || '',
-      unitLabel: this.formatPrice(it.price) + (it.persons ? ' · ' + it.persons + ' pers.' : ''),
+      unitLabel: it.persons
+        ? it.persons + ' pers. · ' + cakesLabel(it.cakes || this.cakesFor(it.persons))
+        : this.formatPrice(it.price),
       priceLabel: this.formatPrice(it.price * it.qty),
       onInc: () => this.inc(it.key),
       onDec: () => this.dec(it.key),
@@ -631,12 +665,11 @@ class Component extends DCLogic {
 
     // ── Valeurs de la fiche produit (popup) ──
     const modalP = s.modalId ? catalog.find((p) => p.id === s.modalId) : null;
-    const modalUnit = modalP ? this.unitPriceFor(modalP, s.modalPersons) : 0;
-    const modalSizes = (modalP && !modalP.unit ? modalP.sizes : []).map((n) => ({
-      label: n + ' pers.',
-      style: this.sizeStyle(n === s.modalPersons),
-      onPick: () => this.setModalPersons(n),
-    }));
+    const isCake = !!(modalP && !modalP.unit);
+    const persons = s.modalPersons || 0;
+    const modalCakes = isCake ? this.cakesFor(Math.max(persons, 1)) : 0;
+    const modalUnit = modalP ? this.unitPriceFor(modalP, persons) : 0;
+    const modalTotal = isCake ? modalUnit : modalUnit * s.modalQty;
     const modalIngredients = modalP ? modalP.ingredients.map((t) => ({ text: t })) : [];
     const modalAllergenes = modalP ? modalP.allergenes.map((t) => ({ text: t })) : [];
 
@@ -673,20 +706,27 @@ class Component extends DCLogic {
       closeLightbox: this.closeLightbox,
       // fiche produit (popup)
       modalOpen: !!modalP,
-      modalIsCake: !!(modalP && !modalP.unit),
+      modalIsCake: isCake,
+      modalIsUnit: !!(modalP && modalP.unit),
       modalName: modalP ? modalP.name : '',
       modalDesc: modalP ? modalP.desc : '',
       modalImg: modalP ? modalP.img : '',
       modalCat: modalP ? (this.PATISSERIE.indexOf(modalP) >= 0 ? 'Pâtisserie' : 'Chocolat') : '',
-      modalSizes,
-      modalPersonsLabel: s.modalPersons ? 'Pour ' + s.modalPersons + ' personnes' : '',
+      modalPersons: persons,
+      onPersonsInput: this.onPersonsInput,
+      onPersonsBlur: this.onPersonsBlur,
+      personsInc: this.personsInc,
+      personsDec: this.personsDec,
+      modalCakesNote: isCake && modalCakes > 1 ? 'Préparé en ' + modalCakes + ' gâteaux (max ' + this.MAX_PER_CAKE + ' parts par gâteau)' : '',
+      modalCakesShow: isCake && modalCakes > 1,
+      modalPersonsLabel: isCake && persons ? 'Pour ' + persons + ' personnes' : '',
       modalIngredients,
       modalAllergenes,
-      modalPriceLabel: this.formatPrice(modalUnit * s.modalQty),
+      modalPriceLabel: this.formatPrice(modalTotal),
       modalQty: s.modalQty,
       modalInc: this.modalInc,
       modalDec: this.modalDec,
-      modalAdd: () => this.addLine(modalP, s.modalPersons, s.modalQty),
+      modalAdd: () => this.addLine(modalP, persons, s.modalQty),
       closeProduct: this.closeProduct,
       stopProp: this.stopProp,
       allergenesOpen: s.allergenesOpen,
