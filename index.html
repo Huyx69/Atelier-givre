@@ -19,6 +19,30 @@
   input,select,textarea,button{font-family:inherit;}
   @keyframes ag-cardIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
   @keyframes ag-fadeIn{from{opacity:0;}to{opacity:1;}}
+  img{max-width:100%;}
+  /* ════════════ RESPONSIVE ════════════ */
+  .ag-burger{display:none;}
+  @media (max-width: 880px){
+    .ag-hero{grid-template-columns:1fr !important;gap:42px !important;}
+    .ag-hero-img{justify-self:center !important;max-width:420px !important;width:100% !important;max-height:60vh !important;}
+    .ag-contact{grid-template-columns:1fr !important;gap:36px !important;}
+    .ag-footer{grid-template-columns:1fr 1fr !important;gap:34px !important;}
+    .ag-modal-grid{grid-template-columns:1fr !important;}
+    .ag-modal-img{min-height:220px !important;height:52vw !important;max-height:300px !important;}
+    .ag-nav{display:none !important;}
+    .ag-burger{display:flex !important;}
+  }
+  @media (max-width: 560px){
+    .ag-headwrap{padding:0 18px !important;}
+    #accueil{padding:100px 20px 54px !important;}
+    #creations,#galerie,#contact{padding:64px 18px !important;}
+    .ag-form{padding:24px !important;}
+    .ag-form-row{grid-template-columns:1fr !important;}
+    .ag-footer{grid-template-columns:1fr !important;gap:28px !important;}
+    .ag-modal-info{padding:26px 22px !important;gap:16px !important;}
+    .ag-creations-grid{grid-template-columns:1fr !important;}
+    .ag-gallery-grid{grid-template-columns:1fr 1fr !important;}
+  }
 </style>
 <!-- Stripe.js — chargé depuis le CDN officiel (intégration : voir initStripe() dans la logique). -->
 <script src="https://js.stripe.com/v3/"></script>
@@ -28,28 +52,44 @@
 
   <!-- ════════════════ HEADER ════════════════ -->
   <header ref="{{ setHeader }}" style="position:fixed;top:0;left:0;right:0;z-index:60;height:74px;background:rgba(255,255,255,0.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid transparent;transition:border-color .35s ease,box-shadow .35s ease;">
-    <div style="max-width:1240px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <div class="ag-headwrap" style="max-width:1240px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
       <a href="#accueil" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:#1A2C3D;">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.4" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><line x1="4.2" y1="7.5" x2="19.8" y2="16.5"/><line x1="4.2" y1="16.5" x2="19.8" y2="7.5"/></svg>
         <span style="font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;letter-spacing:.5px;">Atelier Givre</span>
       </a>
-      <nav style="display:flex;align-items:center;gap:30px;">
+      <nav class="ag-nav" style="display:flex;align-items:center;gap:30px;">
         <a href="#accueil" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Accueil</a>
         <a href="#creations" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Nos créations</a>
         <a href="#galerie" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Galerie</a>
         <a href="#contact" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Contact</a>
       </nav>
-      <button onClick="{{ openCart }}" aria-label="Panier" style="position:relative;background:none;border:none;cursor:pointer;padding:8px;display:flex;align-items:center;color:#1A2C3D;">
-        <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
-        <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:0;right:0;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#C9A84C;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;">{{ cartCount }}</span></sc-if>
-      </button>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button onClick="{{ openCart }}" aria-label="Panier" style="position:relative;background:none;border:none;cursor:pointer;padding:8px;display:flex;align-items:center;color:#1A2C3D;">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:0;right:0;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#C9A84C;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;">{{ cartCount }}</span></sc-if>
+        </button>
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" class="ag-burger" style="background:none;border:none;cursor:pointer;padding:8px;color:#1A2C3D;align-items:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- ════════════════ MENU MOBILE ════════════════ -->
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:55;background:rgba(13,22,31,.35);animation:ag-fadeIn .25s ease;"></div>
+    <div style="position:fixed;top:74px;left:0;right:0;z-index:58;background:#fff;border-bottom:1px solid #E8E8E8;box-shadow:0 14px 32px -18px rgba(26,44,61,.45);display:flex;flex-direction:column;padding:6px 0;animation:ag-fadeIn .25s ease;">
+      <a onClick="{{ closeMenu }}" href="#accueil" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Accueil</a>
+      <a onClick="{{ closeMenu }}" href="#creations" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Nos créations</a>
+      <a onClick="{{ closeMenu }}" href="#galerie" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Galerie</a>
+      <a onClick="{{ closeMenu }}" href="#contact" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;">Contact</a>
+    </div>
+  </sc-if>
 
   <!-- ════════════════ ACCUEIL · PRÉSENTATION ════════════════ -->
   <section id="accueil" style="position:relative;min-height:100vh;display:flex;align-items:center;padding:118px 28px 72px;background:radial-gradient(120% 90% at 50% 0%,#FFFFFF 0%,#F5F7FA 72%,#EEF3F8 100%);overflow:hidden;">
     <svg viewBox="0 0 24 24" width="560" height="560" fill="none" stroke="#C8D8E8" stroke-width="0.3" stroke-linecap="round" style="position:absolute;top:-8%;right:-7%;opacity:.4;pointer-events:none;"><line x1="12" y1="3" x2="12" y2="21"/><line x1="4.2" y1="7.5" x2="19.8" y2="16.5"/><line x1="4.2" y1="16.5" x2="19.8" y2="7.5"/></svg>
-    <div style="position:relative;max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.08fr .92fr;gap:72px;align-items:center;">
+    <div class="ag-hero" style="position:relative;max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.08fr .92fr;gap:72px;align-items:center;">
       <div>
         <div style="display:flex;align-items:center;gap:12px;color:#C9A84C;margin-bottom:18px;"><span style="height:1px;width:34px;background:#C9A84C;"></span><span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Pâtisserie · Chocolaterie — Artemare, Ain</span></div>
         <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(42px,6vw,80px);line-height:1.03;letter-spacing:-.5px;margin:0 0 28px;color:#1A2C3D;">L'art du givre<br>et du chocolat</h1>
@@ -58,7 +98,7 @@
         <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:#1A2C3D;margin:30px 0 34px;">Kylian Givre <span style="font-family:'DM Sans',sans-serif;font-style:normal;font-size:12px;letter-spacing:1px;color:#C9A84C;text-transform:uppercase;display:block;margin-top:4px;">Pâtissier-chocolatier · seul aux commandes</span></p>
         <a href="#creations" style="display:inline-flex;align-items:center;gap:10px;background:#C9A84C;color:#fff;text-decoration:none;font-size:14px;letter-spacing:1.2px;text-transform:uppercase;padding:16px 34px;border-radius:2px;transition:background .3s ease,transform .3s ease,box-shadow .3s ease;box-shadow:0 8px 24px rgba(201,168,76,.25);" style-hover="background:#1A2C3D;transform:translateY(-2px);box-shadow:0 14px 32px rgba(26,44,61,.2);">Découvrir nos créations</a>
       </div>
-      <div style="position:relative;justify-self:end;width:100%;max-width:430px;aspect-ratio:3/4;max-height:78vh;border-radius:10px;overflow:hidden;box-shadow:0 36px 70px -30px rgba(26,44,61,.4);background:linear-gradient(155deg,#F5F7FA 0%,#E9EFF5 55%,#DEE7F0 100%);">
+      <div class="ag-hero-img" style="position:relative;justify-self:end;width:100%;max-width:430px;aspect-ratio:3/4;max-height:78vh;border-radius:10px;overflow:hidden;box-shadow:0 36px 70px -30px rgba(26,44,61,.4);background:linear-gradient(155deg,#F5F7FA 0%,#E9EFF5 55%,#DEE7F0 100%);">
         <img src="images/tarte-fraises-vanille-1.jpg" alt="Tarte fraises-vanille de l'Atelier Givre" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
     </div>
@@ -75,7 +115,7 @@
         <button onClick="{{ setPat }}" style="{{ patTabStyle }}">Pâtisserie</button>
         <button onClick="{{ setCho }}" style="{{ choTabStyle }}">Chocolat</button>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:30px;">
+      <div class="ag-creations-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:30px;">
         <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="6">
           <article onClick="{{ p.onOpen }}" style="background:#fff;border:1px solid #E8E8E8;border-radius:13px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;animation:ag-cardIn .5s ease both;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;" style-hover="transform:translateY(-6px);box-shadow:0 24px 44px -26px rgba(26,44,61,.4);border-color:#C9A84C;">
             <div style="position:relative;height:215px;overflow:hidden;background:linear-gradient(150deg,#F5F7FA 0%,#EAF0F6 55%,#E2EAF2 100%);">
@@ -102,7 +142,7 @@
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;color:#C9A84C;margin-bottom:16px;"><span style="height:1px;width:30px;background:#C9A84C;"></span><span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">L'atelier en images</span><span style="height:1px;width:30px;background:#C9A84C;"></span></div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(36px,5vw,58px);margin:0;color:#1A2C3D;">Galerie</h2>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;">
+      <div class="ag-gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
         <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="8">
           <button onClick="{{ g.onOpen }}" style="position:relative;aspect-ratio:1/1;border:none;padding:0;cursor:pointer;overflow:hidden;border-radius:8px;background:linear-gradient(150deg,#F5F7FA 0%,#E8EFF6 55%,#DFE8F1 100%);" style-hover="filter:brightness(.97);">
             <img src="{{ g.src }}" alt="{{ g.caption }}" style="width:100%;height:100%;object-fit:cover;display:block;">
@@ -115,7 +155,7 @@
 
   <!-- ════════════════ CONTACT ════════════════ -->
   <section id="contact" style="scroll-margin-top:90px;padding:104px 28px;background:#F5F7FA;">
-    <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);max-width:1080px;margin:0 auto;display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start;">
+    <div data-reveal class="ag-contact" style="opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);max-width:1080px;margin:0 auto;display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start;">
       <div>
         <div style="display:flex;align-items:center;gap:12px;color:#C9A84C;margin-bottom:16px;"><span style="height:1px;width:30px;background:#C9A84C;"></span><span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Contact</span></div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4vw,46px);margin:0 0 24px;line-height:1.1;color:#1A2C3D;">Une question, une commande&nbsp;?</h2>
@@ -126,8 +166,8 @@
           <p style="margin:14px 0 0;color:#566571;">Livraison dans un rayon de 30&nbsp;km<br>Click &amp; collect disponible</p>
         </div>
       </div>
-      <form onSubmit="{{ onContactSubmit }}" style="background:#fff;border:1px solid #E8E8E8;border-radius:13px;padding:34px;display:flex;flex-direction:column;gap:18px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <form onSubmit="{{ onContactSubmit }}" class="ag-form" style="background:#fff;border:1px solid #E8E8E8;border-radius:13px;padding:34px;display:flex;flex-direction:column;gap:18px;">
+        <div class="ag-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Nom<input type="text" required="true" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
           <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Email<input type="email" required="true" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
         </div>
@@ -141,7 +181,7 @@
 
   <!-- ════════════════ FOOTER ════════════════ -->
   <footer style="background:#1A2C3D;color:#dbe4ec;padding:70px 28px 36px;">
-    <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;">
+    <div class="ag-footer" style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;">
       <div>
         <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.4" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><line x1="4.2" y1="7.5" x2="19.8" y2="16.5"/><line x1="4.2" y1="16.5" x2="19.8" y2="7.5"/></svg>
@@ -251,11 +291,11 @@
     <div onClick="{{ closeProduct }}" style="position:fixed;inset:0;z-index:95;background:rgba(13,22,31,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:24px;animation:ag-fadeIn .3s ease;">
       <div onClick="{{ stopProp }}" style="position:relative;width:min(920px,96vw);max-height:92vh;overflow-y:auto;background:#fff;border-radius:16px;box-shadow:0 40px 90px -30px rgba(13,22,31,.6);animation:ag-cardIn .4s ease both;">
         <button onClick="{{ closeProduct }}" aria-label="Fermer" style="position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border:none;border-radius:50%;background:rgba(255,255,255,.92);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1A2C3D;box-shadow:0 4px 14px rgba(26,44,61,.22);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>
-        <div style="display:grid;grid-template-columns:1fr 1fr;">
-          <div style="position:relative;min-height:360px;background:linear-gradient(150deg,#F5F7FA,#E3EAF2);">
+        <div class="ag-modal-grid" style="display:grid;grid-template-columns:1fr 1fr;">
+          <div class="ag-modal-img" style="position:relative;min-height:360px;background:linear-gradient(150deg,#F5F7FA,#E3EAF2);">
             <img src="{{ modalImg }}" alt="{{ modalName }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
-          <div style="padding:38px 34px;display:flex;flex-direction:column;gap:18px;">
+          <div class="ag-modal-info" style="padding:38px 34px;display:flex;flex-direction:column;gap:18px;">
             <div>
               <div style="display:flex;align-items:center;gap:10px;color:#C9A84C;margin-bottom:10px;"><span style="height:1px;width:26px;background:#C9A84C;"></span><span style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;">{{ modalCat }}</span></div>
               <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;line-height:1.1;margin:0;color:#1A2C3D;">{{ modalName }}</h3>
@@ -404,6 +444,7 @@ class Component extends DCLogic {
     modalPersons: 0,
     modalQty: 1,
     allergenesOpen: false,
+    menuOpen: false,
   };
 
   // ── Cycle de vie ──
@@ -477,6 +518,9 @@ class Component extends DCLogic {
 
   openCart = () => this.setState({ cartOpen: true });
   closeCart = () => this.setState({ cartOpen: false });
+
+  toggleMenu = () => this.setState((s) => ({ menuOpen: !s.menuOpen }));
+  closeMenu = () => this.setState({ menuOpen: false });
 
   setCollect = () => this.setState({ delivery: 'collect' });
   setHome = () => this.setState({ delivery: 'home' });
@@ -722,6 +766,10 @@ class Component extends DCLogic {
       openCart: this.openCart,
       closeCart: this.closeCart,
       checkout: this.checkout,
+      // menu mobile
+      menuOpen: s.menuOpen,
+      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
       // delivery
       isHome,
       setCollect: this.setCollect,
