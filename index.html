@@ -399,10 +399,22 @@
             <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;line-height:1.1;margin:0;color:#1A2C3D;">Votre Number Cake</h3>
           </div>
 
-          <div>
-            <label style="display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin-bottom:8px;">Votre chiffre / lettre / date</label>
-            <input value="{{ ncText }}" onInput="{{ ncTextInput }}" placeholder="ex. 18, 30, L, 2024…" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 14px;font-size:16px;color:#1A2C3D;outline:none;transition:border-color .25s ease;" style-focus="border-color:#C9A84C;">
+          <div class="ag-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;">Votre chiffre / lettre / date
+              <input value="{{ ncText }}" onInput="{{ ncTextInput }}" placeholder="ex. 18, 30, L…" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 14px;font-size:16px;color:#1A2C3D;outline:none;transition:border-color .25s ease;" style-focus="border-color:#C9A84C;">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;">Nombre de personnes
+              <select value="{{ ncPersons }}" onChange="{{ ncPersonsCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 34px 13px 14px;font-size:15px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                <sc-for list="{{ ncPersonsOpts }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+              </select>
+            </label>
           </div>
+          <sc-if value="{{ ncCakesShow }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;gap:8px;margin-top:-10px;background:#FBF8EF;border:1px solid #EBD9AE;border-radius:9px;padding:10px 14px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"/></svg>
+              <span style="font-size:13px;color:#8a6d1f;">{{ ncCakesNote }}</span>
+            </div>
+          </sc-if>
 
           <div>
             <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Recettes signature</p>
@@ -465,7 +477,7 @@
 
           <div style="border-top:1px solid #F0F0F0;padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
             <div style="display:flex;flex-direction:column;gap:2px;">
-              <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Prix estimé · {{ ncCharCount }} caractère(s)</span>
+              <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">{{ ncPersonsLabel }}</span>
               <span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#C9A84C;">{{ ncPriceLabel }}</span>
             </div>
             <button onClick="{{ addNC }}" style="background:#C9A84C;color:#fff;border:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;transition:background .3s ease;" style-hover="background:#1A2C3D;">Ajouter au panier</button>
@@ -623,8 +635,10 @@ class Component extends DCLogic {
   imagesOf = (product) => (product && this.PRODUCT_IMAGES[product.id]) || (product ? [product.img] : []);
 
   // ── Number Cake : options de composition ──
-  // Prix par chiffre/lettre (valeur choisie par défaut, à remplacer par le tarif réel).
-  NC_PRICE_PER_CHAR = 35;
+  // Prix par personne + taille max d'un gâteau (valeurs choisies par défaut, à ajuster).
+  NC_PRICE_PER_PERSON = 3.5;
+  NC_MAX_PER_CAKE = 30;
+  NC_PERSONS = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60];
   NC = {
     bases: ['Pâte sucrée nature', 'Pâte sucrée cacao', 'Pâte sucrée citron', 'Pâte sucrée amande', 'Pâte sucrée noisette', 'Pâte sucrée pistache', 'Biscuit madeleine vanille', 'Biscuit madeleine citron', 'Biscuit madeleine chocolat', 'Biscuit joconde amande', 'Biscuit joconde pistache', 'Biscuit noisette', 'Biscuit chocolat', 'Biscuit financier', 'Biscuit pain de Gênes'],
     croustillants: ['Praliné noisette', 'Praliné pistache', 'Praliné pécan', 'Praliné amande', 'Praliné cacahuète', 'Chocolat noir feuilletine', 'Chocolat au lait feuilletine', 'Chocolat blanc croustillant', 'Noix de coco torréfiée'],
@@ -647,7 +661,7 @@ class Component extends DCLogic {
   state = {
     cart: [],
     activeCat: 'Tartes & entremets',
-    nc: { open: false, text: '', preset: -1, base: '', croustillant: '', cremeux: '', compotee: '', gel: '', mousse: '', decors: [], fruitsSecs: [] },
+    nc: { open: false, text: '', persons: 20, preset: -1, base: '', croustillant: '', cremeux: '', compotee: '', gel: '', mousse: '', decors: [], fruitsSecs: [] },
     cartOpen: false,
     delivery: 'collect',
     view: 'shop',
@@ -684,11 +698,20 @@ class Component extends DCLogic {
     window.addEventListener('scroll', this._onScroll, { passive: true });
     this._onScroll();
     this.initReveal();
+    this.syncScrollLock();
   }
-  componentDidUpdate() { this.initReveal(); }
+  componentDidUpdate() { this.initReveal(); this.syncScrollLock(); }
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
     if (this._io) this._io.disconnect();
+    document.body.style.overflow = '';
+  }
+
+  // ── Blocage du défilement de l'arrière-plan quand un panneau est ouvert ──
+  syncScrollLock() {
+    const s = this.state;
+    const lock = !!(s.modalId || s.cartOpen || s.zoomSrc || s.menuOpen || (s.nc && s.nc.open) || s.lightboxIndex >= 0 || s.view === 'confirmation');
+    document.body.style.overflow = lock ? 'hidden' : '';
   }
 
   // ── Animations fade-in au scroll (Intersection Observer) ──
@@ -741,6 +764,8 @@ class Component extends DCLogic {
   ncGelCh = (e) => this.ncSetField('gel', e.target.value);
   ncMousseCh = (e) => this.ncSetField('mousse', e.target.value);
   ncTextInput = (e) => { const v = e.target.value; this.setState((s) => ({ nc: { ...s.nc, text: v } })); };
+  ncPersonsCh = (e) => { const v = parseInt(e.target.value, 10) || 10; this.setState((s) => ({ nc: { ...s.nc, persons: v } })); };
+  ncCakes = () => Math.max(1, Math.ceil((this.state.nc.persons || 10) / this.NC_MAX_PER_CAKE));
   ncToggle = (kind, name) => this.setState((s) => {
     const arr = s.nc[kind];
     const next = arr.indexOf(name) >= 0 ? arr.filter((x) => x !== name) : [...arr, name];
@@ -750,12 +775,13 @@ class Component extends DCLogic {
     const p = this.NC_PRESETS[i];
     return { nc: { ...s.nc, preset: i, base: p.base, croustillant: p.croustillant, cremeux: p.cremeux, compotee: p.compotee, gel: p.gel, mousse: p.mousse, decors: [...p.decors], fruitsSecs: [...p.fruitsSecs] } };
   });
-  ncCharCount = () => Math.max(1, (this.state.nc.text || '').replace(/[^0-9A-Za-zÀ-ÿ]/g, '').length);
-  ncPrice = () => this.ncCharCount() * this.NC_PRICE_PER_CHAR;
+  ncPrice = () => (this.state.nc.persons || 10) * this.NC_PRICE_PER_PERSON;
   addNC = () => {
     const nc = this.state.nc;
     if (!nc.text.trim() || !nc.base) return;
-    const parts = ['Base : ' + nc.base];
+    const cakes = this.ncCakes();
+    const parts = [nc.persons + ' personnes' + (cakes > 1 ? ' (' + cakes + ' gâteaux)' : '')];
+    parts.push('Base : ' + nc.base);
     if (nc.croustillant) parts.push('Croustillant : ' + nc.croustillant);
     if (nc.cremeux) parts.push('Crémeux : ' + nc.cremeux);
     if (nc.compotee) parts.push('Compotée : ' + nc.compotee);
@@ -1057,8 +1083,13 @@ class Component extends DCLogic {
       ncMousse: s.nc.mousse, ncMousseCh: this.ncMousseCh, ncMousseOpts: this.ncSelectOptions(this.NC.mousses, '— Aucune —'),
       ncDecors: this.NC.decors.map((n) => ({ name: n, style: this.chipStyle(s.nc.decors.indexOf(n) >= 0), onToggle: () => this.ncToggle('decors', n) })),
       ncFruitsSecs: this.NC.fruitsSecs.map((n) => ({ name: n, style: this.chipStyle(s.nc.fruitsSecs.indexOf(n) >= 0), onToggle: () => this.ncToggle('fruitsSecs', n) })),
+      ncPersons: s.nc.persons,
+      ncPersonsCh: this.ncPersonsCh,
+      ncPersonsOpts: this.NC_PERSONS.map((n) => ({ v: n, label: n + ' personnes' + (n > this.NC_MAX_PER_CAKE ? ' · 2 gâteaux' : '') })),
+      ncPersonsLabel: 'Pour ' + s.nc.persons + ' personnes',
+      ncCakesShow: this.ncCakes() > 1,
+      ncCakesNote: 'Réalisé sur ' + this.ncCakes() + ' gâteaux (max ' + this.NC_MAX_PER_CAKE + ' personnes par gâteau).',
       ncPriceLabel: this.formatPrice(this.ncPrice()),
-      ncCharCount: this.ncCharCount(),
       ncValid: !!(s.nc.text.trim() && s.nc.base),
       ncInvalid: !(s.nc.text.trim() && s.nc.base),
       addNC: this.addNC,
