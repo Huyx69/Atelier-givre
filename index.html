@@ -32,8 +32,10 @@
     .ag-nav{display:none !important;}
     .ag-burger{display:flex !important;}
   }
+  select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a98a5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 12px center;}
   @media (max-width: 560px){
     .ag-headwrap{padding:0 18px !important;}
+    .ag-nc-grid{grid-template-columns:1fr !important;}
     #accueil{padding:100px 20px 54px !important;}
     #creations,#galerie,#contact{padding:64px 18px !important;}
     .ag-form{padding:24px !important;}
@@ -60,6 +62,7 @@
       <nav class="ag-nav" style="display:flex;align-items:center;gap:30px;">
         <a href="#accueil" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Accueil</a>
         <a href="#creations" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Nos créations</a>
+        <a href="#number-cake" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Number Cake</a>
         <a href="#galerie" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Galerie</a>
         <a href="#contact" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Contact</a>
       </nav>
@@ -81,6 +84,7 @@
     <div style="position:fixed;top:74px;left:0;right:0;z-index:58;background:#fff;border-bottom:1px solid #E8E8E8;box-shadow:0 14px 32px -18px rgba(26,44,61,.45);display:flex;flex-direction:column;padding:6px 0;animation:ag-fadeIn .25s ease;">
       <a onClick="{{ closeMenu }}" href="#accueil" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Accueil</a>
       <a onClick="{{ closeMenu }}" href="#creations" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Nos créations</a>
+      <a onClick="{{ closeMenu }}" href="#number-cake" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Number Cake</a>
       <a onClick="{{ closeMenu }}" href="#galerie" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Galerie</a>
       <a onClick="{{ closeMenu }}" href="#contact" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;">Contact</a>
     </div>
@@ -134,6 +138,16 @@
           </article>
         </sc-for>
       </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ NUMBER CAKE ════════════════ -->
+  <section id="number-cake" style="scroll-margin-top:80px;padding:104px 28px;background:#1A2C3D;color:#fff;overflow:hidden;">
+    <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);max-width:920px;margin:0 auto;text-align:center;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;color:#C9A84C;margin-bottom:16px;"><span style="height:1px;width:30px;background:#C9A84C;"></span><span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Sur-mesure</span><span style="height:1px;width:30px;background:#C9A84C;"></span></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,56px);margin:0 0 20px;color:#fff;">Composez votre Number Cake</h2>
+      <p style="font-size:16px;line-height:1.85;color:#c4d0dc;margin:0 auto 34px;max-width:56ch;">Un chiffre, une lettre, une date… et une composition entièrement libre : choisissez votre base, votre croustillant, votre crémeux, vos inserts fruités, votre ganache montée et vos décors. Ou partez d'une de nos six recettes signature.</p>
+      <button onClick="{{ openNC }}" style="display:inline-flex;align-items:center;gap:10px;background:#C9A84C;color:#fff;border:none;font-size:14px;letter-spacing:1.2px;text-transform:uppercase;padding:16px 36px;border-radius:2px;cursor:pointer;transition:background .3s ease,transform .3s ease;" style-hover="background:#fff;color:#1A2C3D;transform:translateY(-2px);">Composer mon Number Cake</button>
     </div>
   </section>
 
@@ -358,6 +372,96 @@
     </div>
   </sc-if>
 
+  <!-- ════════════════ COMPOSEUR NUMBER CAKE ════════════════ -->
+  <sc-if value="{{ ncOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeNC }}" style="position:fixed;inset:0;z-index:96;background:rgba(13,22,31,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;animation:ag-fadeIn .3s ease;">
+      <div onClick="{{ stopProp }}" style="position:relative;width:min(780px,96vw);max-height:92vh;overflow-y:auto;background:#fff;border-radius:16px;box-shadow:0 40px 90px -30px rgba(13,22,31,.6);animation:ag-cardIn .4s ease both;">
+        <button onClick="{{ closeNC }}" aria-label="Fermer" style="position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border:none;border-radius:50%;background:#F5F7FA;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1A2C3D;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>
+        <div style="padding:36px 30px 28px;display:flex;flex-direction:column;gap:24px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;color:#C9A84C;margin-bottom:10px;"><span style="height:1px;width:26px;background:#C9A84C;"></span><span style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;">Sur-mesure</span></div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;line-height:1.1;margin:0;color:#1A2C3D;">Votre Number Cake</h3>
+          </div>
+
+          <div>
+            <label style="display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin-bottom:8px;">Votre chiffre / lettre / date</label>
+            <input value="{{ ncText }}" onInput="{{ ncTextInput }}" placeholder="ex. 18, 30, L, 2024…" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 14px;font-size:16px;color:#1A2C3D;outline:none;transition:border-color .25s ease;" style-focus="border-color:#C9A84C;">
+          </div>
+
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Recettes signature</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <sc-for list="{{ ncPresets }}" as="p" hint-placeholder-count="6">
+                <button onClick="{{ p.onApply }}" style="{{ p.style }}">{{ p.name }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid #F0F0F0;padding-top:22px;">
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 14px;">Composez la vôtre</p>
+            <div class="ag-nc-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Base *
+                <select value="{{ ncBase }}" onChange="{{ ncBaseCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:12px 34px 12px 12px;font-size:14px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                  <sc-for list="{{ ncBaseOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+                </select>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Croustillant
+                <select value="{{ ncCroust }}" onChange="{{ ncCroustCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:12px 34px 12px 12px;font-size:14px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                  <sc-for list="{{ ncCroustOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+                </select>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Crémeux
+                <select value="{{ ncCremeux }}" onChange="{{ ncCremeuxCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:12px 34px 12px 12px;font-size:14px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                  <sc-for list="{{ ncCremeuxOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+                </select>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Compotée / Confit
+                <select value="{{ ncCompotee }}" onChange="{{ ncCompoteeCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:12px 34px 12px 12px;font-size:14px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                  <sc-for list="{{ ncCompoteeOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+                </select>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Gel
+                <select value="{{ ncGel }}" onChange="{{ ncGelCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:12px 34px 12px 12px;font-size:14px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                  <sc-for list="{{ ncGelOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+                </select>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Mousse / Ganache montée
+                <select value="{{ ncMousse }}" onChange="{{ ncMousseCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:12px 34px 12px 12px;font-size:14px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                  <sc-for list="{{ ncMousseOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Décoration — fruits</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <sc-for list="{{ ncDecors }}" as="d" hint-placeholder-count="6"><button onClick="{{ d.onToggle }}" style="{{ d.style }}">{{ d.name }}</button></sc-for>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Fruits secs</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <sc-for list="{{ ncFruitsSecs }}" as="d" hint-placeholder-count="6"><button onClick="{{ d.onToggle }}" style="{{ d.style }}">{{ d.name }}</button></sc-for>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid #F0F0F0;padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">Prix estimé · {{ ncCharCount }} caractère(s)</span>
+              <span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#C9A84C;">{{ ncPriceLabel }}</span>
+            </div>
+            <button onClick="{{ addNC }}" style="background:#C9A84C;color:#fff;border:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;transition:background .3s ease;" style-hover="background:#1A2C3D;">Ajouter au panier</button>
+          </div>
+          <sc-if value="{{ ncInvalid }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0;font-size:12.5px;color:#b06a4f;background:#FBF1EC;border-left:2px solid #C9A84C;padding:10px 14px;border-radius:0 6px 6px 0;">Indiquez un chiffre / lettre et choisissez au moins une base pour ajouter au panier.</p>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <!-- ════════════════ CONFIRMATION ════════════════ -->
   <sc-if value="{{ isConfirmed }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:100;background:#FFFFFF;overflow-y:auto;animation:ag-fadeIn .4s ease;">
@@ -485,9 +589,31 @@ class Component extends DCLogic {
     { src: 'images/flan-pecan-3.jpg', caption: 'Flan · à la coupe' },
   ];
 
+  // ── Number Cake : options de composition (prix par chiffre/lettre à ajuster) ──
+  NC_PRICE_PER_CHAR = 32;
+  NC = {
+    bases: ['Pâte sucrée nature', 'Pâte sucrée cacao', 'Pâte sucrée citron', 'Pâte sucrée amande', 'Pâte sucrée noisette', 'Pâte sucrée pistache', 'Biscuit madeleine vanille', 'Biscuit madeleine citron', 'Biscuit madeleine chocolat', 'Biscuit joconde amande', 'Biscuit joconde pistache', 'Biscuit noisette', 'Biscuit chocolat', 'Biscuit financier', 'Biscuit pain de Gênes'],
+    croustillants: ['Praliné noisette', 'Praliné pistache', 'Praliné pécan', 'Praliné amande', 'Praliné cacahuète', 'Chocolat noir feuilletine', 'Chocolat au lait feuilletine', 'Chocolat blanc croustillant', 'Noix de coco torréfiée'],
+    cremeux: ['Vanille', 'Chocolat noir', 'Chocolat au lait', 'Chocolat blanc', 'Pistache', 'Noisette', 'Cacahuète', 'Café', 'Citron jaune', 'Citron vert', 'Yuzu', 'Framboise', 'Fraise', 'Mangue', 'Passion', 'Pêche', 'Abricot', 'Poire', 'Praliné', 'Noix de coco', 'Verveine'],
+    compotees: ['Fraise', 'Framboise', 'Mangue', 'Mangue-passion', 'Pêche', 'Abricot', 'Poire', 'Pomme', 'Cassis', 'Myrtille', 'Cerise', 'Ananas', 'Kiwi', 'Litchi'],
+    gels: ['Citron', 'Citron vert', 'Yuzu', 'Framboise', 'Fraise', 'Mangue', 'Passion', 'Abricot', 'Pêche', 'Cassis', 'Myrtille', 'Orange', 'Clémentine', 'Litchi'],
+    mousses: ['Vanille', 'Chocolat noir', 'Chocolat lait', 'Citron', 'Framboise', 'Fraise', 'Mangue', 'Passion', 'Coco', 'Verveine vanille', "Fleur d'oranger vanille", 'Tonka vanille'],
+    decors: ['Framboises', 'Fraises', 'Myrtilles', 'Mûres', 'Mangue', 'Pêche', 'Abricot', 'Kiwi', 'Fruit de la passion', 'Figue', 'Raisin', 'Citron', 'Citron vert'],
+    fruitsSecs: ['Pistaches', 'Noisettes', 'Amandes', 'Noix de pécan', 'Cacahuètes', 'Noix'],
+  };
+  NC_PRESETS = [
+    { name: 'Vanille & Pistache', base: 'Pâte sucrée nature', croustillant: 'Praliné pistache', cremeux: 'Vanille', compotee: '', gel: '', mousse: 'Vanille', decors: [], fruitsSecs: ['Pistaches'] },
+    { name: 'Chocolat praliné noisette', base: 'Pâte sucrée cacao', croustillant: 'Praliné noisette', cremeux: 'Chocolat noir', compotee: '', gel: '', mousse: 'Chocolat noir', decors: [], fruitsSecs: ['Cacahuètes'] },
+    { name: 'Citrons', base: 'Pâte sucrée citron', croustillant: '', cremeux: 'Citron jaune', compotee: '', gel: 'Citron vert', mousse: 'Citron', decors: ['Citron'], fruitsSecs: [] },
+    { name: 'Framboise & Vanille', base: 'Pâte sucrée nature', croustillant: '', cremeux: '', compotee: 'Framboise', gel: '', mousse: 'Vanille', decors: ['Framboises'], fruitsSecs: [] },
+    { name: 'Pêche & Verveine', base: 'Pâte sucrée nature', croustillant: '', cremeux: '', compotee: 'Pêche', gel: '', mousse: 'Verveine vanille', decors: ['Pêche'], fruitsSecs: [] },
+    { name: 'Mangue & Passion', base: 'Pâte sucrée nature', croustillant: '', cremeux: '', compotee: 'Mangue-passion', gel: '', mousse: 'Vanille', decors: ['Mangue'], fruitsSecs: [] },
+  ];
+
   state = {
     cart: [],
     activeCat: 'Tartes & entremets',
+    nc: { open: false, text: '', preset: -1, base: '', croustillant: '', cremeux: '', compotee: '', gel: '', mousse: '', decors: [], fruitsSecs: [] },
     cartOpen: false,
     delivery: 'collect',
     view: 'shop',
@@ -507,8 +633,8 @@ class Component extends DCLogic {
       const saved = JSON.parse(localStorage.getItem('atelier-givre-cart') || '[]');
       const known = this.PRODUCTS.map((p) => p.id);
       const valid = (Array.isArray(saved) ? saved : [])
-        .filter((i) => i && i.key && known.includes(i.id) && i.opt)
-        .map((i) => ({ key: i.key, id: i.id, name: i.name, opt: i.opt, price: i.price, qty: i.qty || 1 }));
+        .filter((i) => i && i.key && i.opt && (known.includes(i.id) || i.id === 'number-cake'))
+        .map((i) => ({ key: i.key, id: i.id, name: i.name, opt: i.opt, price: i.price, qty: i.qty || 1, img: i.img }));
       if (valid.length) this.setState({ cart: valid });
     } catch (e) { /* panier corrompu : on ignore */ }
 
@@ -567,6 +693,48 @@ class Component extends DCLogic {
 
   toggleMenu = () => this.setState((s) => ({ menuOpen: !s.menuOpen }));
   closeMenu = () => this.setState({ menuOpen: false });
+
+  // ── Number Cake (composeur) ──
+  openNC = () => this.setState((s) => ({ menuOpen: false, cartOpen: false, nc: { ...s.nc, open: true } }));
+  closeNC = () => this.setState((s) => ({ nc: { ...s.nc, open: false } }));
+  ncSetField = (f, v) => this.setState((s) => ({ nc: { ...s.nc, [f]: v, preset: -1 } }));
+  ncBaseCh = (e) => this.ncSetField('base', e.target.value);
+  ncCroustCh = (e) => this.ncSetField('croustillant', e.target.value);
+  ncCremeuxCh = (e) => this.ncSetField('cremeux', e.target.value);
+  ncCompoteeCh = (e) => this.ncSetField('compotee', e.target.value);
+  ncGelCh = (e) => this.ncSetField('gel', e.target.value);
+  ncMousseCh = (e) => this.ncSetField('mousse', e.target.value);
+  ncTextInput = (e) => { const v = e.target.value; this.setState((s) => ({ nc: { ...s.nc, text: v } })); };
+  ncToggle = (kind, name) => this.setState((s) => {
+    const arr = s.nc[kind];
+    const next = arr.indexOf(name) >= 0 ? arr.filter((x) => x !== name) : [...arr, name];
+    return { nc: { ...s.nc, [kind]: next, preset: -1 } };
+  });
+  applyPreset = (i) => this.setState((s) => {
+    const p = this.NC_PRESETS[i];
+    return { nc: { ...s.nc, preset: i, base: p.base, croustillant: p.croustillant, cremeux: p.cremeux, compotee: p.compotee, gel: p.gel, mousse: p.mousse, decors: [...p.decors], fruitsSecs: [...p.fruitsSecs] } };
+  });
+  ncCharCount = () => Math.max(1, (this.state.nc.text || '').replace(/[^0-9A-Za-zÀ-ÿ]/g, '').length);
+  ncPrice = () => this.ncCharCount() * this.NC_PRICE_PER_CHAR;
+  addNC = () => {
+    const nc = this.state.nc;
+    if (!nc.text.trim() || !nc.base) return;
+    const parts = ['Base : ' + nc.base];
+    if (nc.croustillant) parts.push('Croustillant : ' + nc.croustillant);
+    if (nc.cremeux) parts.push('Crémeux : ' + nc.cremeux);
+    if (nc.compotee) parts.push('Compotée : ' + nc.compotee);
+    if (nc.gel) parts.push('Gel : ' + nc.gel);
+    if (nc.mousse) parts.push('Mousse : ' + nc.mousse);
+    if (nc.decors.length) parts.push('Décor : ' + nc.decors.join(', '));
+    if (nc.fruitsSecs.length) parts.push('Fruits secs : ' + nc.fruitsSecs.join(', '));
+    const key = 'nc-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+    const line = { key, id: 'number-cake', name: 'Number Cake « ' + nc.text.trim() + ' »', opt: parts.join(' · '), price: this.ncPrice(), qty: 1, img: 'images/vanille-pistache-1.jpg' };
+    this.setState((s) => {
+      const cart = [...s.cart, line];
+      this.persist(cart);
+      return { cart, cartOpen: true, nc: { ...s.nc, open: false } };
+    });
+  };
 
   setCollect = () => this.setState({ delivery: 'collect' });
   setHome = () => this.setState({ delivery: 'home' });
@@ -697,6 +865,21 @@ class Component extends DCLogic {
       color: active ? '#fff' : '#1A2C3D',
     };
   }
+  chipStyle(active) {
+    return {
+      padding: '8px 14px',
+      borderRadius: '20px',
+      cursor: 'pointer',
+      fontSize: '13px',
+      transition: 'all .2s ease',
+      border: active ? '1px solid #C9A84C' : '1px solid #E8E8E8',
+      background: active ? '#C9A84C' : '#fff',
+      color: active ? '#fff' : '#566571',
+    };
+  }
+  ncSelectOptions(list, placeholder) {
+    return [{ v: '', label: placeholder }].concat(list.map((v) => ({ v, label: v })));
+  }
 
   priceFromLabel = (p) => {
     const min = Math.min.apply(null, p.options.map((o) => o.price));
@@ -721,7 +904,7 @@ class Component extends DCLogic {
 
     const cartItems = s.cart.map((it) => ({
       ...it,
-      img: (this.productById(it.id) || {}).img || '',
+      img: it.img || (this.productById(it.id) || {}).img || '',
       unitLabel: it.opt,
       priceLabel: this.formatPrice(it.price * it.qty),
       onInc: () => this.inc(it.key),
@@ -789,6 +972,26 @@ class Component extends DCLogic {
       modalAdd: () => this.addLine(modalP, optIdx, s.modalQty),
       closeProduct: this.closeProduct,
       stopProp: this.stopProp,
+      // number cake (composeur)
+      openNC: this.openNC,
+      closeNC: this.closeNC,
+      ncOpen: s.nc.open,
+      ncText: s.nc.text,
+      ncTextInput: this.ncTextInput,
+      ncPresets: this.NC_PRESETS.map((p, i) => ({ name: p.name, style: this.chipStyle(i === s.nc.preset), onApply: () => this.applyPreset(i) })),
+      ncBase: s.nc.base, ncBaseCh: this.ncBaseCh, ncBaseOpts: this.ncSelectOptions(this.NC.bases, '— Choisir une base —'),
+      ncCroust: s.nc.croustillant, ncCroustCh: this.ncCroustCh, ncCroustOpts: this.ncSelectOptions(this.NC.croustillants, '— Aucun —'),
+      ncCremeux: s.nc.cremeux, ncCremeuxCh: this.ncCremeuxCh, ncCremeuxOpts: this.ncSelectOptions(this.NC.cremeux, '— Aucun —'),
+      ncCompotee: s.nc.compotee, ncCompoteeCh: this.ncCompoteeCh, ncCompoteeOpts: this.ncSelectOptions(this.NC.compotees, '— Aucune —'),
+      ncGel: s.nc.gel, ncGelCh: this.ncGelCh, ncGelOpts: this.ncSelectOptions(this.NC.gels, '— Aucun —'),
+      ncMousse: s.nc.mousse, ncMousseCh: this.ncMousseCh, ncMousseOpts: this.ncSelectOptions(this.NC.mousses, '— Aucune —'),
+      ncDecors: this.NC.decors.map((n) => ({ name: n, style: this.chipStyle(s.nc.decors.indexOf(n) >= 0), onToggle: () => this.ncToggle('decors', n) })),
+      ncFruitsSecs: this.NC.fruitsSecs.map((n) => ({ name: n, style: this.chipStyle(s.nc.fruitsSecs.indexOf(n) >= 0), onToggle: () => this.ncToggle('fruitsSecs', n) })),
+      ncPriceLabel: this.formatPrice(this.ncPrice()),
+      ncCharCount: this.ncCharCount(),
+      ncValid: !!(s.nc.text.trim() && s.nc.base),
+      ncInvalid: !(s.nc.text.trim() && s.nc.base),
+      addNC: this.addNC,
       allergenesOpen: s.allergenesOpen,
       toggleAllergenes: this.toggleAllergenes,
       allergenesPanelStyle: {
