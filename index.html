@@ -63,6 +63,7 @@
         <a href="#accueil" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Accueil</a>
         <a href="#creations" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Nos créations</a>
         <a href="#number-cake" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Number Cake</a>
+        <a href="#devis" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Devis</a>
         <a href="#galerie" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Galerie</a>
         <a href="#contact" style="font-size:13.5px;letter-spacing:.4px;color:#1A2C3D;text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .25s ease;" style-hover="border-bottom:1px solid #C9A84C;">Contact</a>
       </nav>
@@ -85,6 +86,7 @@
       <a onClick="{{ closeMenu }}" href="#accueil" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Accueil</a>
       <a onClick="{{ closeMenu }}" href="#creations" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Nos créations</a>
       <a onClick="{{ closeMenu }}" href="#number-cake" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Number Cake</a>
+      <a onClick="{{ closeMenu }}" href="#devis" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Devis</a>
       <a onClick="{{ closeMenu }}" href="#galerie" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;border-bottom:1px solid #F2F2F2;">Galerie</a>
       <a onClick="{{ closeMenu }}" href="#contact" style="padding:15px 24px;font-size:15px;letter-spacing:.3px;color:#1A2C3D;text-decoration:none;">Contact</a>
     </div>
@@ -148,6 +150,40 @@
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,56px);margin:0 0 20px;color:#fff;">Composez votre Number Cake</h2>
       <p style="font-size:16px;line-height:1.85;color:#c4d0dc;margin:0 auto 34px;max-width:56ch;">Un chiffre, une lettre, une date… et une composition entièrement libre : choisissez votre base, votre croustillant, votre crémeux, vos inserts fruités, votre ganache montée et vos décors. Ou partez d'une de nos six recettes signature.</p>
       <button onClick="{{ openNC }}" style="display:inline-flex;align-items:center;gap:10px;background:#C9A84C;color:#fff;border:none;font-size:14px;letter-spacing:1.2px;text-transform:uppercase;padding:16px 36px;border-radius:2px;cursor:pointer;transition:background .3s ease,transform .3s ease;" style-hover="background:#fff;color:#1A2C3D;transform:translateY(-2px);">Composer mon Number Cake</button>
+    </div>
+  </section>
+
+  <!-- ════════════════ DEVIS · GRANDES OCCASIONS ════════════════ -->
+  <section id="devis" style="scroll-margin-top:80px;padding:104px 28px;background:#F5F7FA;">
+    <div data-reveal class="ag-contact" style="opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);max-width:1080px;margin:0 auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:start;">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;color:#C9A84C;margin-bottom:16px;"><span style="height:1px;width:30px;background:#C9A84C;"></span><span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Sur-mesure</span></div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,4vw,48px);margin:0 0 22px;line-height:1.1;color:#1A2C3D;">Devis &amp; grandes occasions</h2>
+        <p style="font-size:15.5px;line-height:1.85;color:#566571;margin:0 0 18px;">Un anniversaire, un mariage, un baptême, une communion ou un événement d'entreprise&nbsp;? Je réalise des pièces sur-mesure et des grands formats, pensés avec vous.</p>
+        <p style="font-size:15.5px;line-height:1.85;color:#566571;margin:0 0 24px;">Décrivez-moi votre projet — occasion, nombre de personnes, saveurs, thème et date — et je reviens vers vous avec une proposition et un devis personnalisé, sans engagement.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;color:#1A2C3D;font-size:14.5px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Wedding cakes &amp; pièces montées</div>
+          <div style="display:flex;align-items:center;gap:12px;color:#1A2C3D;font-size:14.5px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Number cakes géants &amp; grands formats</div>
+          <div style="display:flex;align-items:center;gap:12px;color:#1A2C3D;font-size:14.5px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Buffets sucrés &amp; commandes événementielles</div>
+        </div>
+      </div>
+      <form onSubmit="{{ onDevisSubmit }}" class="ag-form" style="background:#fff;border:1px solid #E8E8E8;border-radius:13px;padding:34px;display:flex;flex-direction:column;gap:18px;">
+        <div class="ag-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Occasion<select required="true" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 24px 9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;cursor:pointer;"><option value="anniversaire">Anniversaire</option><option value="mariage">Mariage</option><option value="bapteme">Baptême / Communion</option><option value="baby-shower">Baby shower</option><option value="entreprise">Événement d'entreprise</option><option value="autre">Autre</option></select></label>
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Nombre de personnes<input type="number" min="1" placeholder="ex. 40" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
+        </div>
+        <div class="ag-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Nom<input type="text" required="true" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Date souhaitée<input type="date" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
+        </div>
+        <div class="ag-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Email<input type="email" required="true" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Téléphone<input type="tel" style="border:none;border-bottom:1px solid #E8E8E8;padding:9px 2px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;transition:border-color .25s ease;" style-focus="border-bottom:1px solid #C9A84C;"></label>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#8a98a5;">Votre projet<textarea required="true" rows="4" placeholder="Saveurs, thème, couleurs, inspirations… et si vous avez coché « Autre », précisez-moi votre idée." style="border:1px solid #E8E8E8;border-radius:6px;padding:12px;font-size:15px;color:#1A2C3D;background:transparent;outline:none;resize:vertical;transition:border-color .25s ease;" style-focus="border:1px solid #C9A84C;"></textarea></label>
+        <sc-if value="{{ devisSent }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:14px;color:#1A2C3D;background:#F5F7FA;border-left:2px solid #C9A84C;padding:12px 16px;animation:ag-fadeIn .4s ease;">Merci, votre demande de devis a bien été envoyée. Je reviens vers vous rapidement.</p></sc-if>
+        <button type="submit" style="align-self:flex-start;background:#1A2C3D;color:#fff;border:none;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;padding:15px 32px;border-radius:2px;cursor:pointer;transition:background .3s ease;" style-hover="background:#C9A84C;">Demander un devis</button>
+      </form>
     </div>
   </section>
 
@@ -404,17 +440,12 @@
               <input value="{{ ncText }}" onInput="{{ ncTextInput }}" placeholder="ex. 18, 30, L…" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 14px;font-size:16px;color:#1A2C3D;outline:none;transition:border-color .25s ease;" style-focus="border-color:#C9A84C;">
             </label>
             <label style="display:flex;flex-direction:column;gap:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;">Nombre de personnes
-              <select value="{{ ncPersons }}" onChange="{{ ncPersonsCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 34px 13px 14px;font-size:15px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
-                <sc-for list="{{ ncPersonsOpts }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+              <select value="{{ ncPlevel }}" onChange="{{ ncPlevelCh }}" style="width:100%;border:1px solid #E8E8E8;border-radius:9px;padding:13px 34px 13px 14px;font-size:15px;color:#1A2C3D;background-color:#fff;cursor:pointer;outline:none;">
+                <sc-for list="{{ ncPersonsOpts }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
               </select>
             </label>
           </div>
-          <sc-if value="{{ ncCakesShow }}" hint-placeholder-val="{{ true }}">
-            <div style="display:flex;align-items:center;gap:8px;margin-top:-10px;background:#FBF8EF;border:1px solid #EBD9AE;border-radius:9px;padding:10px 14px;">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"/></svg>
-              <span style="font-size:13px;color:#8a6d1f;">{{ ncCakesNote }}</span>
-            </div>
-          </sc-if>
+          <p style="margin:-12px 0 0;font-size:12px;color:#8a98a5;">Le nombre de personnes s'adapte au nombre de chiffres/lettres saisis.</p>
 
           <div>
             <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Recettes signature</p>
@@ -462,14 +493,14 @@
           </div>
 
           <div>
-            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Décoration — fruits</p>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">{{ ncDecorSuppLabel }}</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <sc-for list="{{ ncDecors }}" as="d" hint-placeholder-count="6"><button onClick="{{ d.onToggle }}" style="{{ d.style }}">{{ d.name }}</button></sc-for>
             </div>
           </div>
 
           <div>
-            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Fruits secs</p>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">{{ ncFruitsSecsSuppLabel }}</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <sc-for list="{{ ncFruitsSecs }}" as="d" hint-placeholder-count="6"><button onClick="{{ d.onToggle }}" style="{{ d.style }}">{{ d.name }}</button></sc-for>
             </div>
@@ -479,6 +510,7 @@
             <div style="display:flex;flex-direction:column;gap:2px;">
               <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">{{ ncPersonsLabel }}</span>
               <span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#C9A84C;">{{ ncPriceLabel }}</span>
+              <sc-if value="{{ ncSuppShow }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#8a98a5;">{{ ncSuppLabel }}</span></sc-if>
             </div>
             <button onClick="{{ addNC }}" style="background:#C9A84C;color:#fff;border:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;transition:background .3s ease;" style-hover="background:#1A2C3D;">Ajouter au panier</button>
           </div>
@@ -634,11 +666,11 @@ class Component extends DCLogic {
   };
   imagesOf = (product) => (product && this.PRODUCT_IMAGES[product.id]) || (product ? [product.img] : []);
 
-  // ── Number Cake : options de composition ──
-  // Prix par personne + taille max d'un gâteau (valeurs choisies par défaut, à ajuster).
-  NC_PRICE_PER_PERSON = 3.5;
-  NC_MAX_PER_CAKE = 30;
-  NC_PERSONS = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60];
+  // ── Number Cake : options de composition (valeurs choisies par défaut, à ajuster) ──
+  NC_PRICE_PER_PERSON = 3.5;                 // prix par personne
+  NC_PORTIONS = [10, 15, 20, 25, 30];        // parts par chiffre/lettre (niveaux de taille)
+  NC_SUPP_DECOR = 2.5;                       // supplément par fruit de décoration
+  NC_SUPP_FRUITSEC = 1.5;                    // supplément par fruit sec
   NC = {
     bases: ['Pâte sucrée nature', 'Pâte sucrée cacao', 'Pâte sucrée citron', 'Pâte sucrée amande', 'Pâte sucrée noisette', 'Pâte sucrée pistache', 'Biscuit madeleine vanille', 'Biscuit madeleine citron', 'Biscuit madeleine chocolat', 'Biscuit joconde amande', 'Biscuit joconde pistache', 'Biscuit noisette', 'Biscuit chocolat', 'Biscuit financier', 'Biscuit pain de Gênes'],
     croustillants: ['Praliné noisette', 'Praliné pistache', 'Praliné pécan', 'Praliné amande', 'Praliné cacahuète', 'Chocolat noir feuilletine', 'Chocolat au lait feuilletine', 'Chocolat blanc croustillant', 'Noix de coco torréfiée'],
@@ -661,12 +693,13 @@ class Component extends DCLogic {
   state = {
     cart: [],
     activeCat: 'Tartes & entremets',
-    nc: { open: false, text: '', persons: 20, preset: -1, base: '', croustillant: '', cremeux: '', compotee: '', gel: '', mousse: '', decors: [], fruitsSecs: [] },
+    nc: { open: false, text: '', plevel: 2, preset: -1, base: '', croustillant: '', cremeux: '', compotee: '', gel: '', mousse: '', decors: [], fruitsSecs: [] },
     cartOpen: false,
     delivery: 'collect',
     view: 'shop',
     lightboxIndex: -1,
     contactSent: false,
+    devisSent: false,
     order: null,
     modalId: null,
     modalOptIdx: 0,
@@ -764,8 +797,10 @@ class Component extends DCLogic {
   ncGelCh = (e) => this.ncSetField('gel', e.target.value);
   ncMousseCh = (e) => this.ncSetField('mousse', e.target.value);
   ncTextInput = (e) => { const v = e.target.value; this.setState((s) => ({ nc: { ...s.nc, text: v } })); };
-  ncPersonsCh = (e) => { const v = parseInt(e.target.value, 10) || 10; this.setState((s) => ({ nc: { ...s.nc, persons: v } })); };
-  ncCakes = () => Math.max(1, Math.ceil((this.state.nc.persons || 10) / this.NC_MAX_PER_CAKE));
+  ncPlevelCh = (e) => { const v = parseInt(e.target.value, 10) || 0; this.setState((s) => ({ nc: { ...s.nc, plevel: v } })); };
+  ncCharCount = () => Math.max(1, (this.state.nc.text || '').replace(/[^0-9A-Za-zÀ-ÿ]/g, '').length);
+  ncPersons = () => this.ncCharCount() * this.NC_PORTIONS[this.state.nc.plevel];
+  ncSupplements = () => this.state.nc.decors.length * this.NC_SUPP_DECOR + this.state.nc.fruitsSecs.length * this.NC_SUPP_FRUITSEC;
   ncToggle = (kind, name) => this.setState((s) => {
     const arr = s.nc[kind];
     const next = arr.indexOf(name) >= 0 ? arr.filter((x) => x !== name) : [...arr, name];
@@ -775,12 +810,11 @@ class Component extends DCLogic {
     const p = this.NC_PRESETS[i];
     return { nc: { ...s.nc, preset: i, base: p.base, croustillant: p.croustillant, cremeux: p.cremeux, compotee: p.compotee, gel: p.gel, mousse: p.mousse, decors: [...p.decors], fruitsSecs: [...p.fruitsSecs] } };
   });
-  ncPrice = () => (this.state.nc.persons || 10) * this.NC_PRICE_PER_PERSON;
+  ncPrice = () => this.ncPersons() * this.NC_PRICE_PER_PERSON + this.ncSupplements();
   addNC = () => {
     const nc = this.state.nc;
     if (!nc.text.trim() || !nc.base) return;
-    const cakes = this.ncCakes();
-    const parts = [nc.persons + ' personnes' + (cakes > 1 ? ' (' + cakes + ' gâteaux)' : '')];
+    const parts = [this.ncPersons() + ' personnes'];
     parts.push('Base : ' + nc.base);
     if (nc.croustillant) parts.push('Croustillant : ' + nc.croustillant);
     if (nc.cremeux) parts.push('Crémeux : ' + nc.cremeux);
@@ -882,6 +916,11 @@ class Component extends DCLogic {
   onContactSubmit = (e) => {
     e.preventDefault();
     this.setState({ contactSent: true });
+    if (e.target && e.target.reset) e.target.reset();
+  };
+  onDevisSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ devisSent: true });
     if (e.target && e.target.reset) e.target.reset();
   };
 
@@ -1083,12 +1122,15 @@ class Component extends DCLogic {
       ncMousse: s.nc.mousse, ncMousseCh: this.ncMousseCh, ncMousseOpts: this.ncSelectOptions(this.NC.mousses, '— Aucune —'),
       ncDecors: this.NC.decors.map((n) => ({ name: n, style: this.chipStyle(s.nc.decors.indexOf(n) >= 0), onToggle: () => this.ncToggle('decors', n) })),
       ncFruitsSecs: this.NC.fruitsSecs.map((n) => ({ name: n, style: this.chipStyle(s.nc.fruitsSecs.indexOf(n) >= 0), onToggle: () => this.ncToggle('fruitsSecs', n) })),
-      ncPersons: s.nc.persons,
-      ncPersonsCh: this.ncPersonsCh,
-      ncPersonsOpts: this.NC_PERSONS.map((n) => ({ v: n, label: n + ' personnes' + (n > this.NC_MAX_PER_CAKE ? ' · 2 gâteaux' : '') })),
-      ncPersonsLabel: 'Pour ' + s.nc.persons + ' personnes',
-      ncCakesShow: this.ncCakes() > 1,
-      ncCakesNote: 'Réalisé sur ' + this.ncCakes() + ' gâteaux (max ' + this.NC_MAX_PER_CAKE + ' personnes par gâteau).',
+      ncCharCount: this.ncCharCount(),
+      ncPlevel: s.nc.plevel,
+      ncPlevelCh: this.ncPlevelCh,
+      ncPersonsOpts: this.NC_PORTIONS.map((p, i) => ({ v: i, label: (this.ncCharCount() * p) + ' personnes' })),
+      ncPersonsLabel: 'Pour ' + this.ncPersons() + ' personnes',
+      ncDecorSuppLabel: 'Décoration — fruits (+' + this.formatPrice(this.NC_SUPP_DECOR) + ' l\'unité)',
+      ncFruitsSecsSuppLabel: 'Fruits secs (+' + this.formatPrice(this.NC_SUPP_FRUITSEC) + ' l\'unité)',
+      ncSuppShow: this.ncSupplements() > 0,
+      ncSuppLabel: 'dont ' + this.formatPrice(this.ncSupplements()) + ' de suppléments',
       ncPriceLabel: this.formatPrice(this.ncPrice()),
       ncValid: !!(s.nc.text.trim() && s.nc.base),
       ncInvalid: !(s.nc.text.trim() && s.nc.base),
@@ -1147,6 +1189,9 @@ class Component extends DCLogic {
       // contact
       onContactSubmit: this.onContactSubmit,
       contactSent: s.contactSent,
+      // devis
+      onDevisSubmit: this.onDevisSubmit,
+      devisSent: s.devisSent,
       // confirmation
       isConfirmed: s.view === 'confirmation',
       orderNumber: order ? order.number : '',
