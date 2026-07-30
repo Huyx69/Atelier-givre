@@ -99,7 +99,7 @@
         <a href="#creations" style="display:inline-flex;align-items:center;gap:10px;background:#C9A84C;color:#fff;text-decoration:none;font-size:14px;letter-spacing:1.2px;text-transform:uppercase;padding:16px 34px;border-radius:2px;transition:background .3s ease,transform .3s ease,box-shadow .3s ease;box-shadow:0 8px 24px rgba(201,168,76,.25);" style-hover="background:#1A2C3D;transform:translateY(-2px);box-shadow:0 14px 32px rgba(26,44,61,.2);">Découvrir nos créations</a>
       </div>
       <div class="ag-hero-img" style="position:relative;justify-self:end;width:100%;max-width:430px;aspect-ratio:3/4;max-height:78vh;border-radius:10px;overflow:hidden;box-shadow:0 36px 70px -30px rgba(26,44,61,.4);background:linear-gradient(155deg,#F5F7FA 0%,#E9EFF5 55%,#DEE7F0 100%);">
-        <img src="images/tarte-fraises-vanille-1.jpg" alt="Tarte fraises-vanille de l'Atelier Givre" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img src="images/vanille-pistache-1.jpg" alt="Tarte vanille & pistache de l'Atelier Givre" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
     </div>
   </section>
@@ -111,9 +111,10 @@
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;color:#C9A84C;margin-bottom:16px;"><span style="height:1px;width:30px;background:#C9A84C;"></span><span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">La carte</span><span style="height:1px;width:30px;background:#C9A84C;"></span></div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(36px,5vw,58px);margin:0;color:#1A2C3D;">Nos créations</h2>
       </div>
-      <div style="display:flex;justify-content:center;gap:8px;margin:34px 0 48px;">
-        <button onClick="{{ setPat }}" style="{{ patTabStyle }}">Pâtisserie</button>
-        <button onClick="{{ setCho }}" style="{{ choTabStyle }}">Chocolat</button>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:34px 0 48px;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+          <button onClick="{{ t.onPick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
       </div>
       <div class="ag-creations-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:30px;">
         <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="6">
@@ -302,7 +303,7 @@
             </div>
             <p style="font-size:14.5px;line-height:1.7;color:#566571;margin:0;">{{ modalDesc }}</p>
 
-            <sc-if value="{{ modalIsCake }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ modalHasChoices }}" hint-placeholder-val="{{ true }}">
               <div>
                 <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a98a5;margin:0 0 10px;">Format</p>
                 <div style="display:flex;flex-wrap:wrap;gap:8px;">
@@ -338,17 +339,15 @@
 
             <div style="margin-top:auto;border-top:1px solid #F0F0F0;padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
               <div style="display:flex;flex-direction:column;gap:2px;">
-                <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">{{ modalPersonsLabel }}</span>
+                <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a98a5;">{{ modalOptLabel }}</span>
                 <span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#C9A84C;">{{ modalPriceLabel }}</span>
               </div>
               <div style="display:flex;align-items:center;gap:12px;">
-                <sc-if value="{{ modalIsUnit }}" hint-placeholder-val="{{ true }}">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <button onClick="{{ modalDec }}" aria-label="Moins" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">−</button>
-                    <span style="font-size:15px;min-width:20px;text-align:center;">{{ modalQty }}</span>
-                    <button onClick="{{ modalInc }}" aria-label="Plus" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">+</button>
-                  </div>
-                </sc-if>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <button onClick="{{ modalDec }}" aria-label="Moins" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">−</button>
+                  <span style="font-size:15px;min-width:20px;text-align:center;">{{ modalQty }}</span>
+                  <button onClick="{{ modalInc }}" aria-label="Plus" style="width:32px;height:32px;border:1px solid #E8E8E8;background:#fff;border-radius:6px;cursor:pointer;color:#1A2C3D;font-size:18px;line-height:1;" style-hover="border-color:#C9A84C;color:#C9A84C;">+</button>
+                </div>
                 <button onClick="{{ modalAdd }}" style="background:#C9A84C;color:#fff;border:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;transition:background .3s ease;" style-hover="background:#1A2C3D;">Ajouter au panier</button>
               </div>
             </div>
@@ -383,57 +382,111 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   // ── Données produits (photos réelles de l'atelier) ──
-  // NOTE : prix/personne, ingrédients et allergènes sont des valeurs par défaut à vérifier.
-  //   - Gâteaux : deux formats (sizes) ; prix = pricePerPerson × nombre de personnes.
-  //   - Produits à l'unité (unit:true) : prix fixe, pas de choix de personnes.
-  PATISSERIE = [
-    { id: 'tarte-nectarine-abricot', name: 'Tarte Nectarine & Abricot', desc: "Quenelles de chantilly vanillée, nectarines et abricots frais, pointe de romarin sur fond sablé pur beurre.", pricePerPerson: 4.5, sizes: [4, 8], img: 'images/tarte-nectarine-abricot-1.jpg',
-      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème pâtissière à la vanille", "Chantilly mascarpone", "Nectarines fraîches", "Abricots frais", "Romarin"],
+  // NOTE : ingrédients et allergènes sont des valeurs par défaut à VÉRIFIER.
+  //   Chaque produit a une ou plusieurs options { label, price } (format / lot).
+  CATEGORIES = ['Tartes & entremets', 'Cakes', 'Petits gâteaux'];
+  PRODUCTS = [
+    // ── Tartes & entremets ──
+    { id: 'trois-citrons', cat: 'Tartes & entremets', name: 'Tarte aux Trois Citrons', img: 'images/trois-citrons-1.jpg',
+      desc: "Crème onctueuse aux trois citrons, chantilly vanillée pochée, zestes frais et pointes de menthe.",
+      options: [{ label: "4/6 personnes", price: 26 }, { label: "8/10 personnes", price: 44 }],
+      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème aux trois citrons (citrons, œufs, beurre, sucre)", "Chantilly vanille", "Zestes de citron"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-    { id: 'tarte-fraises-vanille', name: 'Tarte Fraises-Vanille', desc: "Chantilly à la vanille de Madagascar dressée en rosace, fraises fraîches de saison, fond sablé.", pricePerPerson: 4.8, sizes: [4, 8], img: 'images/tarte-fraises-vanille-1.jpg',
-      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème diplomate vanille de Madagascar", "Fraises fraîches", "Sucre"],
+    { id: 'peche-verveine', cat: 'Tartes & entremets', name: 'Tarte Pêche, Verveine & Vanille', img: 'images/peche-verveine-1.jpg',
+      desc: "Pêches et pêches de vigne fraîches en rosace, crème vanille infusée à la verveine, feuille d'or.",
+      options: [{ label: "4/6 personnes", price: 24 }, { label: "8/10 personnes", price: 42 }],
+      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème vanille-verveine", "Pêches fraîches", "Sucre"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-    { id: 'tarte-citron', name: 'Tarte Citron', desc: "Crème de citron, pétales de chantilly, zestes frais et palet de chocolat blanc, fond sablé pur beurre.", pricePerPerson: 4.3, sizes: [4, 8], img: 'images/tarte-citron-2.jpg',
-      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème de citron (citrons, œufs, beurre, sucre)", "Chantilly", "Chocolat blanc", "Zestes de citron"],
-      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Soja"] },
-    { id: 'tarte-vanille-caramel', name: 'Tarte Vanille-Caramel', desc: "Crème légère à la vanille dressée au couteau, traits de caramel beurre salé maison, fond sablé.", pricePerPerson: 4.5, sizes: [4, 8], img: 'images/tarte-vanille-caramel-3.jpg',
-      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème légère à la vanille", "Caramel au beurre salé", "Sucre"],
+    { id: 'choco-cacahuete', cat: 'Tartes & entremets', name: 'Tarte Chocolat, Caramel & Cacahuète', img: 'images/choco-cacahuete-1.jpg',
+      desc: "Ganache chocolat, caramel tendre et cacahuètes torréfiées, sur fond sablé pur beurre.",
+      options: [{ label: "4/6 personnes", price: 24 }, { label: "8/10 personnes", price: 42 }],
+      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Ganache chocolat", "Caramel", "Cacahuètes torréfiées"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Arachides", "Soja"] },
+    { id: 'vanille-pistache', cat: 'Tartes & entremets', name: 'Tarte Vanille & Pistache', img: 'images/vanille-pistache-1.jpg',
+      desc: "Crème vanille dressée en spirale, cœur de pistaches caramélisées, biscuit pistache, feuille d'or.",
+      options: [{ label: "4/6 personnes", price: 26 }, { label: "8/10 personnes", price: 44 }],
+      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème vanille", "Pâte de pistache & pistaches", "Sucre"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque (pistaches)"] },
+    { id: 'manguier', cat: 'Tartes & entremets', name: 'Le Manguier', img: 'images/manguier-1.jpg',
+      desc: "Entremets à la mangue : biscuit moelleux, mousse vanille et dés de mangue fraîche.",
+      options: [{ label: "4 personnes", price: 24 }, { label: "8 personnes", price: 42 }],
+      ingredients: ["Biscuit (farine de blé, œufs, sucre)", "Mousse vanille", "Mangue fraîche"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-    { id: 'gateau-chocolat', name: 'Le Tout-Chocolat', desc: "Chantilly chocolat en rosace, cœur coulant praliné, contour glaçage rocher aux éclats de noisettes.", pricePerPerson: 5.0, sizes: [4, 8], img: 'images/gateau-chocolat-3.jpg',
-      ingredients: ["Biscuit au chocolat (farine de blé, œufs, sucre, cacao)", "Chantilly au chocolat", "Praliné noisette", "Glaçage rocher (chocolat, éclats de noisettes)"],
-      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque (noisettes)", "Soja"] },
-    { id: 'tartelette-vanille-passion', name: 'Tartelette Vanille-Passion', desc: "Format individuel — crème vanille aux grains, cœur exotique mangue-passion, gousse de vanille.", price: 6.5, unit: true, img: 'images/tartelette-vanille-passion-1.jpg',
-      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Crème à la vanille", "Insert mangue-passion", "Gousse de vanille"],
+    { id: 'flan-pecan', cat: 'Tartes & entremets', name: 'Flan Vanille & Pécan', img: 'images/flan-pecan-1.jpg',
+      desc: "Flan crémeux à la vanille sur base sablée, quenelles de crème et noix de pécan caramélisées.",
+      options: [{ label: "4 personnes", price: 22 }, { label: "8 personnes", price: 40 }],
+      ingredients: ["Pâte sablée (farine de blé, beurre, sucre, œufs)", "Appareil à flan (lait, œufs, vanille, sucre)", "Noix de pécan"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque (pécan)"] },
+    // ── Cakes (25 cm) ──
+    { id: 'cake-citron-framboise', cat: 'Cakes', name: 'Cake Citron & Framboise', img: 'images/cake-citron-framboise-1.jpg',
+      desc: "Cake moelleux au citron, cœur de framboise, glaçage croquant aux amandes.",
+      options: [{ label: "Cake 25 cm", price: 22 }],
+      ingredients: ["Farine de blé", "Œufs", "Beurre", "Sucre", "Citron", "Framboise", "Amandes"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque (amandes)"] },
+    { id: 'cake-vanille-pavot', cat: 'Cakes', name: 'Cake Vanille & Pavot', img: 'images/cake-vanille-pavot-1.jpg',
+      desc: "Cake vanille aux graines de pavot, glaçage croquant aux amandes.",
+      options: [{ label: "Cake 25 cm", price: 22 }],
+      ingredients: ["Farine de blé", "Œufs", "Beurre", "Sucre", "Vanille", "Graines de pavot", "Amandes"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque (amandes)"] },
+    { id: 'cake-citron-nature', cat: 'Cakes', name: 'Cake Citron (nature)', img: 'images/cake-citron-framboise-1.jpg',
+      desc: "Cake moelleux au citron, sans glaçage. (Photo dédiée à venir)",
+      options: [{ label: "Cake 25 cm", price: 12 }],
+      ingredients: ["Farine de blé", "Œufs", "Beurre", "Sucre", "Citron"],
       allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
-  ];
-  CHOCOLAT = [
-    { id: 'lapin-chocolat', name: 'Lapin Chocolat au Lait', desc: "Moulage artisanal en chocolat au lait, moulé et démoulé à la main à l'atelier.", price: 12.0, unit: true, img: 'images/lapin-chocolat-1.jpg',
-      ingredients: ["Chocolat au lait (sucre, beurre de cacao, pâte de cacao, lait en poudre, émulsifiant : lécithine de soja, arôme naturel de vanille)"],
-      allergenes: ["Lait", "Soja", "Peut contenir des traces de fruits à coque"] },
+    { id: 'cake-vanille-pavot-nature', cat: 'Cakes', name: 'Cake Vanille-Pavot (nature)', img: 'images/cake-vanille-pavot-1.jpg',
+      desc: "Cake vanille aux graines de pavot, sans glaçage. (Photo dédiée à venir)",
+      options: [{ label: "Cake 25 cm", price: 14 }],
+      ingredients: ["Farine de blé", "Œufs", "Beurre", "Sucre", "Vanille", "Graines de pavot"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
+    // ── Petits gâteaux ──
+    { id: 'cannele-nature', cat: 'Petits gâteaux', name: 'Cannelés Nature', img: 'images/cannele-1.jpg',
+      desc: "Cannelés bordelais, croûte caramélisée et cœur moelleux vanillé.",
+      options: [{ label: "À l'unité", price: 2.40 }, { label: "Lot de 3", price: 6.80 }, { label: "Lot de 6", price: 13.30 }],
+      ingredients: ["Lait", "Farine de blé", "Œufs", "Sucre", "Beurre", "Vanille"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
+    { id: 'cannele-rhum', cat: 'Petits gâteaux', name: 'Cannelés au Rhum', img: 'images/cannele-1.jpg',
+      desc: "Cannelés bordelais parfumés au rhum, croûte caramélisée et cœur moelleux.",
+      options: [{ label: "À l'unité", price: 2.60 }, { label: "Lot de 3", price: 7.40 }, { label: "Lot de 6", price: 14.40 }],
+      ingredients: ["Lait", "Farine de blé", "Œufs", "Sucre", "Beurre", "Vanille", "Rhum"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Alcool (rhum)"] },
+    { id: 'cookies', cat: 'Petits gâteaux', name: 'Cookies Deux Chocolats – Pistache / Pécan', img: 'images/cookie-1.jpg',
+      desc: "Cookie aux deux chocolats, cœur coulant pistache ou pécan.",
+      options: [{ label: "À l'unité", price: 4.20 }, { label: "Lot de 2", price: 8 }, { label: "Lot de 4", price: 15.50 }],
+      ingredients: ["Farine de blé", "Beurre", "Sucre", "Œufs", "Chocolat noir & au lait", "Pistache ou pécan"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque", "Soja"] },
+    { id: 'financiers', cat: 'Petits gâteaux', name: 'Financiers Pistache / Noisette', img: 'images/financier-1.jpg',
+      desc: "Financiers moelleux à la poudre d'amande, parfum pistache ou noisette.",
+      options: [{ label: "À l'unité", price: 2.40 }, { label: "Lot de 2", price: 4.60 }, { label: "Lot de 4", price: 9.20 }, { label: "Lot de 6", price: 14 }],
+      ingredients: ["Blancs d'œufs", "Beurre noisette", "Sucre glace", "Poudre d'amande", "Farine de blé", "Pistache ou noisette"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait", "Fruits à coque"] },
+    { id: 'madeleines', cat: 'Petits gâteaux', name: 'Madeleines Citron & Vanille', img: 'images/financier-1.jpg',
+      desc: "Madeleines moelleuses à la vanille et au citron, bosse dorée. (Photo dédiée à venir)",
+      options: [{ label: "À l'unité", price: 2 }, { label: "Lot de 3", price: 5.50 }, { label: "Lot de 6", price: 10.50 }],
+      ingredients: ["Farine de blé", "Œufs", "Beurre", "Sucre", "Citron", "Vanille"],
+      allergenes: ["Gluten (blé)", "Œufs", "Lait"] },
   ];
   GALLERY = [
-    { src: 'images/tarte-nectarine-abricot-1.jpg', caption: 'Tarte nectarine & abricot' },
-    { src: 'images/tarte-nectarine-abricot-2.jpg', caption: 'Tarte nectarine & abricot' },
-    { src: 'images/tarte-fraises-vanille-1.jpg', caption: 'Tarte fraises-vanille' },
-    { src: 'images/tarte-fraises-vanille-2.jpg', caption: 'Tarte fraises-vanille · dressage' },
-    { src: 'images/tarte-citron-1.jpg', caption: 'Tarte citron' },
-    { src: 'images/tarte-citron-2.jpg', caption: 'Tarte citron · vue de dessus' },
-    { src: 'images/tarte-vanille-caramel-1.jpg', caption: 'Tarte vanille-caramel' },
-    { src: 'images/tarte-vanille-caramel-2.jpg', caption: 'Tarte vanille-caramel' },
-    { src: 'images/tarte-vanille-caramel-3.jpg', caption: 'Tarte vanille-caramel' },
-    { src: 'images/gateau-chocolat-1.jpg', caption: 'Le tout-chocolat' },
-    { src: 'images/gateau-chocolat-2.jpg', caption: 'Le tout-chocolat · cœur coulant' },
-    { src: 'images/gateau-chocolat-3.jpg', caption: 'Le tout-chocolat · glaçage rocher' },
-    { src: 'images/gateau-chocolat-4.jpg', caption: "Le tout-chocolat · sortie d'atelier" },
-    { src: 'images/tartelette-vanille-passion-1.jpg', caption: 'Tartelette vanille-passion' },
-    { src: 'images/tartelette-vanille-passion-2.jpg', caption: 'Tartelette vanille-passion' },
-    { src: 'images/lapin-chocolat-1.jpg', caption: 'Lapins chocolat au lait · moulage' },
-    { src: 'images/lapin-chocolat-2.jpg', caption: "Lapins chocolat au lait · l'atelier en production" },
+    { src: 'images/trois-citrons-1.jpg', caption: 'Tarte aux trois citrons' },
+    { src: 'images/peche-verveine-1.jpg', caption: 'Tarte pêche, verveine & vanille' },
+    { src: 'images/vanille-pistache-1.jpg', caption: 'Tarte vanille & pistache' },
+    { src: 'images/choco-cacahuete-1.jpg', caption: 'Tarte chocolat, caramel & cacahuète' },
+    { src: 'images/manguier-1.jpg', caption: 'Le Manguier' },
+    { src: 'images/manguier-3.jpg', caption: 'Le Manguier · à la coupe' },
+    { src: 'images/flan-pecan-1.jpg', caption: 'Flan vanille & pécan' },
+    { src: 'images/vanille-pistache-3.jpg', caption: 'Tarte vanille & pistache · à la coupe' },
+    { src: 'images/cake-citron-framboise-1.jpg', caption: 'Cake citron & framboise' },
+    { src: 'images/cake-vanille-pavot-1.jpg', caption: 'Cake vanille & pavot' },
+    { src: 'images/cannele-1.jpg', caption: 'Cannelés' },
+    { src: 'images/cookie-1.jpg', caption: 'Cookie cœur pistache' },
+    { src: 'images/cookie-2.jpg', caption: 'Cookie cœur pécan' },
+    { src: 'images/financier-1.jpg', caption: 'Financiers' },
+    { src: 'images/peche-verveine-2.jpg', caption: 'Tarte pêche · dressage' },
+    { src: 'images/flan-pecan-3.jpg', caption: 'Flan · à la coupe' },
   ];
 
   state = {
     cart: [],
-    activeCat: 'patisserie',
+    activeCat: 'Tartes & entremets',
     cartOpen: false,
     delivery: 'collect',
     view: 'shop',
@@ -441,7 +494,7 @@ class Component extends DCLogic {
     contactSent: false,
     order: null,
     modalId: null,
-    modalPersons: 0,
+    modalOptIdx: 0,
     modalQty: 1,
     allergenesOpen: false,
     menuOpen: false,
@@ -451,17 +504,10 @@ class Component extends DCLogic {
   componentDidMount() {
     try {
       const saved = JSON.parse(localStorage.getItem('atelier-givre-cart') || '[]');
-      const known = [...this.PATISSERIE, ...this.CHOCOLAT].map((p) => p.id);
+      const known = this.PRODUCTS.map((p) => p.id);
       const valid = (Array.isArray(saved) ? saved : [])
-        .filter((i) => i && known.includes(i.id))
-        .map((i) => ({
-          key: i.key || (i.persons ? i.id + '@' + i.persons : i.id),
-          id: i.id,
-          name: i.name,
-          persons: i.persons != null ? i.persons : null,
-          price: i.price,
-          qty: i.qty || 1,
-        }));
+        .filter((i) => i && i.key && known.includes(i.id) && i.opt)
+        .map((i) => ({ key: i.key, id: i.id, name: i.name, opt: i.opt, price: i.price, qty: i.qty || 1 }));
       if (valid.length) this.setState({ cart: valid });
     } catch (e) { /* panier corrompu : on ignore */ }
 
@@ -513,8 +559,7 @@ class Component extends DCLogic {
   setHeader = (el) => { this._header = el; };
   setAddress = (el) => { this._addr = el; };
 
-  setPat = () => this.setState({ activeCat: 'patisserie' });
-  setCho = () => this.setState({ activeCat: 'chocolat' });
+  setCat = (name) => this.setState({ activeCat: name });
 
   openCart = () => this.setState({ cartOpen: true });
   closeCart = () => this.setState({ cartOpen: false });
@@ -529,37 +574,35 @@ class Component extends DCLogic {
   backToShop = () => this.setState({ view: 'shop', order: null });
 
   // ── Fiche produit (popup détaillée) ──
-  defaultPersonsOf = (product) => product && !product.unit && product.sizes ? product.sizes[0] : 0;
-  unitPriceFor = (product, persons) => product.unit ? product.price : product.pricePerPerson * persons;
+  productById = (id) => this.PRODUCTS.find((p) => p.id === id);
 
   openProduct = (product) => this.setState({
     modalId: product.id,
-    modalPersons: this.defaultPersonsOf(product),
+    modalOptIdx: 0,
     modalQty: 1,
     allergenesOpen: false,
     lightboxIndex: -1,
     cartOpen: false,
   });
   closeProduct = () => this.setState({ modalId: null });
-  setModalPersons = (n) => this.setState({ modalPersons: n });
+  setModalOpt = (i) => this.setState({ modalOptIdx: i });
   toggleAllergenes = () => this.setState((s) => ({ allergenesOpen: !s.allergenesOpen }));
   modalInc = () => this.setState((s) => ({ modalQty: s.modalQty + 1 }));
   modalDec = () => this.setState((s) => ({ modalQty: Math.max(1, s.modalQty - 1) }));
   stopProp = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
 
-  // ── Panier (lignes identifiées par une clé produit + taille) ──
-  addLine = (product, persons, qty) => {
+  // ── Panier (lignes identifiées par une clé produit + option) ──
+  addLine = (product, optIdx, qty) => {
     if (!product) return;
-    const nb = product.unit ? 0 : (persons || this.defaultPersonsOf(product));
+    const opt = product.options[optIdx] || product.options[0];
+    const key = product.id + '@' + opt.label;
     this.setState((s) => {
-      const unit = this.unitPriceFor(product, nb);
-      const key = product.unit ? product.id : product.id + '@' + nb;
       const existing = s.cart.find((i) => i.key === key);
       let cart;
       if (existing) {
         cart = s.cart.map((i) => i.key === key ? { ...i, qty: i.qty + qty } : i);
       } else {
-        cart = [...s.cart, { key, id: product.id, name: product.name, persons: product.unit ? null : nb, price: unit, qty }];
+        cart = [...s.cart, { key, id: product.id, name: product.name, opt: opt.label, price: opt.price, qty }];
       }
       this.persist(cart);
       return { cart, cartOpen: true, modalId: null };
@@ -654,23 +697,31 @@ class Component extends DCLogic {
     };
   }
 
+  priceFromLabel = (p) => {
+    const min = Math.min.apply(null, p.options.map((o) => o.price));
+    return p.options.length > 1 ? 'dès ' + this.formatPrice(min) : this.formatPrice(min);
+  };
+
   renderVals() {
     const s = this.state;
-    const list = s.activeCat === 'patisserie' ? this.PATISSERIE : this.CHOCOLAT;
-    const visibleProducts = list.map((p) => ({
+    const tabs = this.CATEGORIES.map((c) => ({
+      label: c,
+      style: this.tabStyle(c === s.activeCat),
+      onPick: () => this.setCat(c),
+    }));
+    const visibleProducts = this.PRODUCTS.filter((p) => p.cat === s.activeCat).map((p) => ({
       id: p.id,
       name: p.name,
       desc: p.desc,
       img: p.img,
-      priceLabel: p.unit ? this.formatPrice(p.price) : 'dès ' + this.formatPrice(p.pricePerPerson * this.defaultPersonsOf(p)),
+      priceLabel: this.priceFromLabel(p),
       onOpen: () => this.openProduct(p),
     }));
 
-    const catalog = [...this.PATISSERIE, ...this.CHOCOLAT];
     const cartItems = s.cart.map((it) => ({
       ...it,
-      img: (catalog.find((p) => p.id === it.id) || {}).img || '',
-      unitLabel: it.persons ? it.persons + ' personnes' : this.formatPrice(it.price),
+      img: (this.productById(it.id) || {}).img || '',
+      unitLabel: it.opt,
       priceLabel: this.formatPrice(it.price * it.qty),
       onInc: () => this.inc(it.key),
       onDec: () => this.dec(it.key),
@@ -678,15 +729,15 @@ class Component extends DCLogic {
     }));
 
     // ── Valeurs de la fiche produit (popup) ──
-    const modalP = s.modalId ? catalog.find((p) => p.id === s.modalId) : null;
-    const isCake = !!(modalP && !modalP.unit);
-    const persons = s.modalPersons || 0;
-    const modalUnit = modalP ? this.unitPriceFor(modalP, persons) : 0;
-    const modalTotal = isCake ? modalUnit : modalUnit * s.modalQty;
-    const modalSizes = (isCake ? modalP.sizes : []).map((n) => ({
-      label: n + ' personnes',
-      style: this.sizeStyle(n === persons),
-      onPick: () => this.setModalPersons(n),
+    const modalP = s.modalId ? this.productById(s.modalId) : null;
+    const optIdx = modalP ? Math.min(s.modalOptIdx, modalP.options.length - 1) : 0;
+    const modalOpt = modalP ? modalP.options[optIdx] : null;
+    const modalTotal = modalOpt ? modalOpt.price * s.modalQty : 0;
+    const hasChoices = !!(modalP && modalP.options.length > 1);
+    const modalSizes = (modalP ? modalP.options : []).map((o, i) => ({
+      label: o.label,
+      style: this.sizeStyle(i === optIdx),
+      onPick: () => this.setModalOpt(i),
     }));
     const modalIngredients = modalP ? modalP.ingredients.map((t) => ({ text: t })) : [];
     const modalAllergenes = modalP ? modalP.allergenes.map((t) => ({ text: t })) : [];
@@ -711,10 +762,7 @@ class Component extends DCLogic {
 
     return {
       // tabs
-      patTabStyle: this.tabStyle(s.activeCat === 'patisserie'),
-      choTabStyle: this.tabStyle(s.activeCat === 'chocolat'),
-      setPat: this.setPat,
-      setCho: this.setCho,
+      tabs,
       visibleProducts,
       // gallery
       gallery,
@@ -724,21 +772,20 @@ class Component extends DCLogic {
       closeLightbox: this.closeLightbox,
       // fiche produit (popup)
       modalOpen: !!modalP,
-      modalIsCake: isCake,
-      modalIsUnit: !!(modalP && modalP.unit),
+      modalHasChoices: hasChoices,
       modalName: modalP ? modalP.name : '',
       modalDesc: modalP ? modalP.desc : '',
       modalImg: modalP ? modalP.img : '',
-      modalCat: modalP ? (this.PATISSERIE.indexOf(modalP) >= 0 ? 'Pâtisserie' : 'Chocolat') : '',
+      modalCat: modalP ? modalP.cat : '',
       modalSizes,
-      modalPersonsLabel: isCake && persons ? 'Pour ' + persons + ' personnes' : '',
+      modalOptLabel: modalOpt ? modalOpt.label : '',
       modalIngredients,
       modalAllergenes,
       modalPriceLabel: this.formatPrice(modalTotal),
       modalQty: s.modalQty,
       modalInc: this.modalInc,
       modalDec: this.modalDec,
-      modalAdd: () => this.addLine(modalP, persons, s.modalQty),
+      modalAdd: () => this.addLine(modalP, optIdx, s.modalQty),
       closeProduct: this.closeProduct,
       stopProp: this.stopProp,
       allergenesOpen: s.allergenesOpen,
